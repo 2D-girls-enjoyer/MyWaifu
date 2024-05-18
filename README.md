@@ -1,7 +1,7 @@
 <p align="center">
   <a href="" rel="noopener">
  <img 
- style="max-width: 272px; max-height: 381px"
+ style="max-width: 90px; max-height: 127px"
  src="https://pm1.aminoapps.com/7035/ee3d92f170f9c1acd4dc4aabc0a616b29e9928bar1-727-1019v2_uhq.jpg" 
  alt="Project logo"></a>
 </p>
