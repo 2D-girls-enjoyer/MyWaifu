@@ -1,5 +1,5 @@
 <p align="center">
-   <img src="https://pm1.aminoapps.com/7035/ee3d92f170f9c1acd4dc4aabc0a616b29e9928bar1-727-1019v2_uhq.jpg" width: "90" height: "127"/>
+   <img src="https://pm1.aminoapps.com/7035/ee3d92f170f9c1acd4dc4aabc0a616b29e9928bar1-727-1019v2_uhq.jpg" style="width:30px;height:auto;"/>
 </p>
 <h3 align="center">AI Kanojo</h3>
 
