@@ -1,8 +1,7 @@
 <p align="center">
    <img src="https://pm1.aminoapps.com/7035/ee3d92f170f9c1acd4dc4aabc0a616b29e9928bar1-727-1019v2_uhq.jpg" width: "90" height: "127"/>
 </p>
-<h3 align="center">AI Kanojo
-</h3>
+<h3 align="center">AI Kanojo</h3>
 
 <div align="center">
 
@@ -17,9 +16,9 @@
     <br> 
 </p>
 
-## :pencil: Objectives
+## 🖊 Objectives
 
-### :first_place: Main Objectives
+### 🥇 Main Objectives
 
 - [ ] Create chat system with user and AI playing the role of a waifu
 - - [ ] Support to LMStudio (primary)
@@ -30,7 +29,7 @@
 - [ ] Waifu emotion detection for each speech
 - [ ] Work on Live2D of the waifu (e.g expressions, motions, rigging)
 
-### :second_place: Secundary obectives (nice 2 have)
+### 🥈 Secundary obectives (nice 2 have)
 - [ ] Long term memory (Waifu should remember events and previous messages)
 - [ ] A platform or script to make easier for "modding" (e.g someone add their custom waifu, Live2d, voice, etc)
 
@@ -40,7 +39,7 @@ Exactly what you've read. Have your own waifu in your PC forever to do whatever 
 
 <p style="font-size: 10px"> Hopefully they'll think you're a Elon Musk or whatever </p>
 
-## :chains: Prerequisites <a name = "limitations"></a>
+## 🚨 Prerequisites <a name = "limitations"></a>
 
 ### 1 - LM Studio
 
@@ -60,16 +59,14 @@ We plan on adding a stuff where you just need to click to run and don't need to 
 
 BUT FOR NOW INSTALL NODE.JS (YOUR WAIFU DEPENDS ON THIS): https://nodejs.org/en
 
-## :pick: Built With <a name = "tech_stack"></a>
+## ⛏️ Built With <a name = "tech_stack"></a>
 Later (skip this)
 
-## :writing_hand: Authors <a name = "authors"></a>
+## ✍️ Authors <a name = "authors"></a>
 Whoever wants to contribute will be added here:
 
 - [@weeb_head_yabai](https://twitter.com/weeb_head_yabai) - Idea & Initial work 
 
-## :tada: Acknowledgments <a name = "acknowledgments"></a>
+## 🎉 Acknowledgments <a name = "acknowledgments"></a>
 
 Later (skip this)
-
-s
