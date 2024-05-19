@@ -66,6 +66,7 @@ Later (skip this)
 Whoever wants to contribute will be added here:
 
 - [@weeb_head_yabai](https://twitter.com/weeb_head_yabai) - Idea & Initial work 
+- [@Lucas43650474](https://twitter.com/Lucas43650474) - Initial work 
 
 ## 🎉 Acknowledgments <a name = "acknowledgments"></a>
 
