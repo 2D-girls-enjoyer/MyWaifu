@@ -2,5 +2,9 @@
   "ext": ".ts,.json",
   "ignore": ["src/**/*.test.ts", "node_modules"],
   "watch": ["src", ".env"],
+  "env": {
+    "PORT": 8686,
+    "LLM_PROMP_CONFIG": "../../configurations/llm-waifu-prompt.json"
+  },
   "exec": "ts-node ./src/index.ts"
 }
