@@ -4,7 +4,7 @@
   "watch": ["src", ".env"],
   "env": {
     "PORT": 8686,
-    "LLM_PROMP_CONFIG": "../../configurations/llm-waifu-prompt.json"
+    "LLM_PROMP_CONFIG": "../../prompts/llm-waifu-prompt.json"
   },
   "exec": "ts-node ./src/index.ts"
 }

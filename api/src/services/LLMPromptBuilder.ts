@@ -1,9 +1,8 @@
 import fs from 'fs';
+import { ICorePromptPlaceholder } from '../models/interfaces/ICorePrompt';
 
 class LLMPromptBuilder {
-  private static readonly USER_ROLE = 'user';
-  private static readonly SYSTEM_ROLE = 'system';
-
+  private readonly PROMPT: string;
   public constructor() {
     fs.readFile(process.env.LLM_PROMP_CONFIG as string, 'utf8', (err, data) => {
       if (err) {
@@ -15,6 +14,9 @@ class LLMPromptBuilder {
 
       JSON.parse(data);
     });
+  }
+  private static resolvePlaceholders(placeholders: ICorePromptPlaceholder) {
+
   }
 
   public forWaifuRespondLastMessage(lastMessage: string) {
