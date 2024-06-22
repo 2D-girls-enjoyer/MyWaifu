@@ -3,8 +3,7 @@
   "ignore": ["src/**/*.test.ts", "node_modules"],
   "watch": ["src", ".env"],
   "env": {
-    "PORT": 8686,
-    "LLM_PROMP_CONFIG": "../../prompts/llm-waifu-prompt.json"
+    "PORT": 8686
   },
   "exec": "ts-node ./src/index.ts"
 }
