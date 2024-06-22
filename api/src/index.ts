@@ -1,3 +1,14 @@
+// temporary process to get username
+import userRepository from './repositories/userRepository';
+import readline from 'readline';
+
+if (!userRepository.getUsername()) {
+  readline.createInterface({
+    input: process.stdin,
+    output: 
+  })
+}
+
 import express from 'express';
 
 const app = express();
