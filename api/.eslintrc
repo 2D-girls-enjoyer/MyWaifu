@@ -23,6 +23,7 @@
     "@typescript-eslint/no-explicit-any": "warn",
     "require-jsdoc": "off",
     "valid-jsdoc": "off",
-    "new-cap": "off"
+    "new-cap": "off",
+    "class-methods-use-this": "off"
   }
 }

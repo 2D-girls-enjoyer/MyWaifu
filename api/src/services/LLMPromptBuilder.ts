@@ -1,12 +1,14 @@
 import fs from 'fs';
 import resourcesPlace from '../configurations/resourcesPlace';
-import { ICorePrompt, ICorePromptPlaceholder } from '../models/interfaces/ICorePrompt';
+import { ICorePrompt } from '../models/interfaces/ICorePrompt';
+import waifuCardReader from './waifuCardReader';
+import { IWaifuCard } from '../models/interfaces/IWaifuCard';
 
 class LLMPromptBuilder {
-  private PROMPT: string;
+  private CHAT_PROMPT: string;
 
-  public loadWaifu(waifu: string): void {
-
+  public preLoadWaifu(waifu: string): void {
+    const waifuCard = waifuCardReader.readAsTxt(waifu);
 
     fs.readFile(resourcesPlace.LLM_PROMP_CORE_PATH, 'utf8', (err, data) => {
       if (err) {
@@ -18,16 +20,18 @@ class LLMPromptBuilder {
       }
 
       const { prompt } = JSON.parse(data) as ICorePrompt;
-      this.resolvePlaceholders(prompt);
+      this.CHAT_PROMPT = this.resolvePlaceholders(prompt, waifuCard);
     });
   }
 
-
-  private resolvePlaceholders(placeholders: ICorePromptPlaceholder) {
+  public buildChatPrompt() {
+    
   }
 
-  public forWaifuRespondLastMessage(lastMessage: string) {
-
+  private resolvePlaceholders(prompts: string, waifuCard: IWaifuCard): string {
+    return prompts
+    .replaceAll('{{waifu}}', waifuCard.name)
+    .replaceAll('{{card_description}}', waifuCard.decription);
   }
 }
 

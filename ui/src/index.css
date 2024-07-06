@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.theme-main {
+  --color-chat-background: 43, 43, 43;
+  --color-user-bubble: 71, 72, 74;
+  --color-user-bubble-text: 238, 238, 245;
+  --color-waifu-bubble: 233, 99, 226;
+  --color-waifu-bubble-text: 238, 238, 245;
+}

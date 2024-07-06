@@ -1,17 +1,19 @@
 {
-  "name": "api",
+  "name": "ai-kanojo-api",
   "version": "0.0.1",
   "main": "./dist/index.js",
   "scripts": {
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "description": "Core api for AI Kanojo",
   "dependencies": {
-    "@lmstudio/sdk": "^0.0.12",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "typescript": "^5.5.2",
+    "undici": "^6.19.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
@@ -21,7 +23,6 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^18.0.0",
     "nodemon": "^3.1.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "ts-node": "^10.9.2"
   }
 }
