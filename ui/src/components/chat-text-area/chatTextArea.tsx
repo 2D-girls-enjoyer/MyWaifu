@@ -5,6 +5,9 @@ function ChatTextArea() {
   const [textContent, setTextContent] = useState('');
 
   useEffect(() => {
+    //Check enter
+    
+    //Adjust text area size dinamically
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
 
