@@ -14,7 +14,8 @@ class MainAIManager {
   }
 
   private sanitizeResponse(completionText: string): string {
-    const regexToGetBetweenQuotes = /".*?"/;
+    const regexToGetBetweenQuotes = /"([^"]*)"/;
+
     return regexToGetBetweenQuotes.exec(completionText)?.[1] || '';
   }
 }
