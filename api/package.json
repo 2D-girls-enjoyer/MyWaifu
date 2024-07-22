@@ -11,11 +11,14 @@
   "license": "MIT",
   "description": "Core api for AI Kanojo",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.19.2",
+    "express-async-handler": "^1.2.0",
     "typescript": "^5.5.2",
     "undici": "^6.19.2"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@typescript-eslint/eslint-plugin": "^7.10.0",
     "@typescript-eslint/parser": "^7.10.0",

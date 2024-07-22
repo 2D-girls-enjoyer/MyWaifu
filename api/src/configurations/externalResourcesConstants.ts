@@ -1,4 +1,4 @@
-class ExternalResourcesPlace {
+class ExternalResourcesConstants {
   public LM_STUDIO_URL: string;
 
   public LM_STUDIO_PORT: string;
@@ -9,4 +9,4 @@ class ExternalResourcesPlace {
   }
 }
 
-export default new ExternalResourcesPlace();
+export default new ExternalResourcesConstants();

@@ -142,3 +142,6 @@ pnpm-lock.yaml
 # Sapper build / export directories
 __sapper__/
 export/
+
+data/*
+!data/.gitkeep

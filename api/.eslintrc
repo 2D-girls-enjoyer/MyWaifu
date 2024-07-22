@@ -20,10 +20,12 @@
   },
   "rules": {
     "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-explicit-any": "off",
     "require-jsdoc": "off",
     "valid-jsdoc": "off",
     "new-cap": "off",
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "no-plusplus": "off",
+    "no-console": "off"
   }
 }

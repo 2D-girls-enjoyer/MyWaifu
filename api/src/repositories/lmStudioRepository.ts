@@ -1,16 +1,21 @@
-import { fetch } from 'undici'
-import { ILLMCompletionRequest } from '../models/interfaces/ILLMCompletionRequest';
-import externalResourcesPlace from '../configurations/externalResourcesPlace';
+import { fetch } from 'undici';
+import { ILLMCompletionRequest, ILLMCompletionResponse } from '../models/interfaces/ILLMCompletion';
+import externalResourcesConstants from '../configurations/externalResourcesConstants';
 
 class LmStudioRepository {
-  public async completion(request: ILLMCompletionRequest) {
-    return fetch(
-      `${externalResourcesPlace.LM_STUDIO_URL}:${externalResourcesPlace.LM_STUDIO_PORT}/v1/completions`,
+  public async completion(request: ILLMCompletionRequest): Promise<ILLMCompletionResponse> {
+    const response = await fetch(
+      `${externalResourcesConstants.LM_STUDIO_URL}:${externalResourcesConstants.LM_STUDIO_PORT}/v1/completions`,
       {
+        headers: {
+          'Content-Type': 'application/json',
+        },
         method: 'POST',
-        body: JSON.stringify(prompt)
-      }
+        body: JSON.stringify(request),
+      },
     );
+
+    return response.json() as Promise<ILLMCompletionResponse>;
   }
 }
 
