@@ -7,6 +7,11 @@ export default {
   theme: {
     extend: {
       colors: {
+        'primary-color': 'rgba(var(--primary-color))',
+        'secondary-color': 'rgba(var(--secondary-color))',
+        'primary-text-color': 'rgba(var(--primary-text-color))',
+        'color-modal-background': 'rgba(var(--color-modal-background))',
+        'color-navbar-background': 'rgba(var(--color-navbar-background))',
         'chat-background': 'rgba(var(--color-chat-background))',
         'user-bubble': 'rgba(var(--color-user-bubble))',
         'user-bubble-text': 'rgba(var(--color-user-bubble-text))',

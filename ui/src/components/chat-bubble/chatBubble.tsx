@@ -1,32 +1,32 @@
-import { BelongsTo } from "../../enums/chatBubble"
+import { BelongsTo } from '../../enums/chatBubble';
 
 type ChatBubbleProps = {
   belongsTo: BelongsTo,
   textDisplay: string
-}
+};
 
 type ColorScheme = {
   [key: string]: string
-} 
+};
 
-function ChatBubble(props: ChatBubbleProps) {
+function ChatBubble({ belongsTo, textDisplay }: ChatBubbleProps) {
   const bgColor: ColorScheme = {
     user: 'bg-user-bubble',
-    waifu: 'bg-waifu-bubble'
-  }
+    waifu: 'bg-waifu-bubble',
+  };
 
   const textColor: ColorScheme = {
     user: 'text-user-bubble-text',
-    waifu: 'text-waifu-bubble-text'
-  }
+    waifu: 'text-waifu-bubble-text',
+  };
 
-  return(
-    <div className={`flex rounded-xl p-4 max-w-fit ${bgColor[props.belongsTo.toLowerCase()]}`}>
-      <p className={`text-base text-justify ${textColor[props.belongsTo.toLowerCase()]} break-words`}>
-        {props.textDisplay} 
+  return (
+    <div className={`flex rounded-xl p-4 w-1/2 max-w-fit ${bgColor[belongsTo.toLowerCase()]}`}>
+      <p className={`text-base text-justify ${textColor[belongsTo.toLowerCase()]} break-words`}>
+        {textDisplay}
       </p>
     </div>
-  )
+  );
 }
 
-export default ChatBubble
+export default ChatBubble;
