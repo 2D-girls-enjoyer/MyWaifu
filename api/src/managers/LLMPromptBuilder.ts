@@ -14,11 +14,11 @@ class LLMPromptBuilder {
  * @param {string} waifuCard Waifu Card
  * @returns {void}
  */
-  public async load(waifuCard: IWaifuCard, username: string): Promise<void> {
+  public async load(waifuCard: IWaifuCard): Promise<void> {
     try {
       const corePrompt = await fs.readFile(resourcesPlace.LLM_PROMP_CORE_PATH, 'utf8');
       const { prompt } = JSON.parse(corePrompt) as ICorePrompt;
-      this.CHAT_PROMPT = this.resolvePlaceholders(prompt, waifuCard, username);
+      this.CHAT_PROMPT = this.resolvePlaceholders(prompt, waifuCard);
     } catch (err) {
       if (err) {
         console.log(
@@ -34,23 +34,22 @@ class LLMPromptBuilder {
  * @param {IReply[]} chatHistory current chat
  * @returns {void}
  */
-  public buildChatPrompt(chatHistory: IReply[], waifuName: string): string {
+  public buildChatPrompt(chatHistory: IReply[], waifuName: string, username: string): string {
     const mostRecentReplies = chatHistory.length > this.MAX_CHAT_REPLY
       ? chatHistory.slice(-this.MAX_CHAT_REPLY)
       : chatHistory;
     let repliesPrompt = '';
 
     for (let i = 0; i < mostRecentReplies.length; i++) {
-      repliesPrompt += `\n${mostRecentReplies[i].sender}: "${mostRecentReplies[i].content}"`;
+      repliesPrompt += `\n${mostRecentReplies[i].sender !== waifuName ? username : waifuName}: "${mostRecentReplies[i].content}"`;
     }
 
     return `${this.CHAT_PROMPT.replaceAll('{{lastMsg}}', repliesPrompt)}, ${waifuName} response:`;
   }
 
-  private resolvePlaceholders(prompts: string, waifuCard: IWaifuCard, username: string): string {
+  private resolvePlaceholders(prompts: string, waifuCard: IWaifuCard): string {
     return prompts
       .replaceAll('{{waifu}}', waifuCard.name)
-    // .replaceAll('{{user}}', username)
       .replaceAll('{{card_description}}', waifuCard.decription);
   }
 }

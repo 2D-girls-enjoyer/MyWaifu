@@ -3,6 +3,8 @@ import { IWaifuCard } from '../models/interfaces/IWaifuCard';
 import chatRepository from '../repositories/chatRepository';
 
 class ChatManager {
+  private DEFAULT_USER_SENDER: string = 'User';
+
   public async load(waifuPack: string, waifuCard: IWaifuCard): Promise<void> {
     if (await chatRepository.hasChatHistory(waifuPack)) {
       return;
@@ -18,11 +20,11 @@ class ChatManager {
     );
   }
 
-  public async saveReply(text: string, sender: string, waifuPack: string): Promise<IReply[]> {
+  public async saveReply(text: string, waifuPack: string, waifuName?: string): Promise<IReply[]> {
     return chatRepository.saveReply(
       {
         content: text.trim(),
-        sender: sender.trim(),
+        sender: waifuName || this.DEFAULT_USER_SENDER,
         date: new Date().toISOString(),
       },
       waifuPack,

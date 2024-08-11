@@ -16,12 +16,10 @@ import {
 
 class ApiService {
   public async selectWaifu({ waifu }: IWaifuSelectionRequest): Promise<void> {
-    const [waifuCard, username] = await Promise.all([
-      waifuCardReader.readAsTxt(waifu),
-      userManager.get(),
-    ]);
+    const waifuCard = await waifuCardReader.readAsTxt(waifu);
     waifuManager.setWaifu(waifuCard, waifu);
-    LLMPromptBuilder.load(waifuCard, username);
+
+    LLMPromptBuilder.load(waifuManager.CARD);
     await chatManager.load(waifu, waifuCard);
   }
 
@@ -32,24 +30,22 @@ class ApiService {
   public async generate({ userReply }: IGenerateRequest): Promise<IGenerateResponse> {
     const replies = await chatManager.saveReply(
       userReply,
-      await userManager.get(),
       waifuManager.PACK,
     );
     const waifuAnswer = await mainAIManager.generate(
-      LLMPromptBuilder.buildChatPrompt(replies, waifuManager.CARD.name),
+      LLMPromptBuilder.buildChatPrompt(replies, waifuManager.CARD.name, await userManager.get()),
     );
     chatManager.saveReply(
       waifuAnswer,
-      waifuManager.CARD.name,
       waifuManager.PACK,
+      waifuManager.CARD.name,
     );
 
     return { response: waifuAnswer };
   }
 
   public async setUsername({ username }: ISetUsernameRequest): Promise<void> {
-    userManager.create(username);
-    await LLMPromptBuilder.load(waifuManager.CARD, username);
+    await userManager.create(username);
   }
 
   public async getUsername(): Promise<IUsernameResponse> {
