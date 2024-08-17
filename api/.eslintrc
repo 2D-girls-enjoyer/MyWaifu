@@ -1,0 +1,31 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "airbnb-base",
+    "airbnb-typescript/base",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "commonjs",
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-explicit-any": "off",
+    "require-jsdoc": "off",
+    "valid-jsdoc": "off",
+    "new-cap": "off",
+    "class-methods-use-this": "off",
+    "no-plusplus": "off",
+    "no-console": "off"
+  }
+}

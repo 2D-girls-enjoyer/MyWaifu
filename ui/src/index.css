@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.theme-main {
+  --primary-color: 32, 134, 250;
+  --secondary-color: 118, 126, 145;
+  --primary-text-color: 238, 238, 245;
+  --color-modal-background: 44, 44, 44;
+  --color-navbar-background: 39, 39,39;
+  --color-chat-background: 43, 43, 43;
+  --color-user-bubble: 71, 72, 74;
+  --color-user-bubble-text: 238, 238, 245;
+  --color-waifu-bubble: 233, 99, 226;
+  --color-waifu-bubble-text: 238, 238, 245;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(var(--secondary-color))
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--primary-color));
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
