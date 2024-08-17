@@ -76,9 +76,9 @@ Download it here: https://lmstudio.ai/
 
 Now install MyWaifu. 
 
-You can download the zip right here on GitHub
+You can download the zip or tar.gz right here on GitHub - https://github.com/2D-girls-enjoyer/MyWaifu/releases
 
-Here is a guide on how to download from GitHub: https://blog.hubspot.com/website/download-from-github#repository
+Also, here is a guide on how to download from GitHub: https://blog.hubspot.com/website/download-from-github#repository
 
 
 ### Done!!!
