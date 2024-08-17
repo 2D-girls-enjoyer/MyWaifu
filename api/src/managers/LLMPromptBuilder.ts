@@ -44,7 +44,7 @@ class LLMPromptBuilder {
       repliesPrompt += `\n${mostRecentReplies[i].sender !== waifuName ? username : waifuName}: "${mostRecentReplies[i].content}"`;
     }
 
-    return `${this.CHAT_PROMPT.replaceAll('{{lastMsg}}', repliesPrompt)}, ${waifuName} response:`;
+    return `${this.CHAT_PROMPT.replaceAll('{{lastMsg}}', repliesPrompt)}, ${waifuName}'s next response:`;
   }
 
   private resolvePlaceholders(prompts: string, waifuCard: IWaifuCard): string {

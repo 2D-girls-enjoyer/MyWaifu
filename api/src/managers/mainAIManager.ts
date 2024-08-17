@@ -3,7 +3,7 @@ import LmStudioRepository from '../repositories/LmStudioRepository';
 class MainAIManager {
   public async generate(prompt: string): Promise<string> {
     const completion = await LmStudioRepository.completion({
-      max_tokens: -1,
+      max_tokens: 120,
       model: '',
       stream: false,
       prompt,
