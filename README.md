@@ -143,6 +143,17 @@ Simply on the right side, scroll and find on GPU settings a slider "GPU Accelera
    <img src="./images/adjust-model-size.PNG" style="width:auto;height:auto;"/>
 </p>
 
+#### 1.3 - Make sure system prompt is blank
+A very important step is to make the system prompt blank either by deleting whatever is writen on "System prompt" or by selecting the Preset "LM Studio Blank Preset" (I recommend the later).
+
+Otherwise it can "confuse" the AI. The default configurations of MyWaifu can guarantee it'll follow the character most of the times
+
+(⚠️ In case you already loaded the model I recommend to click "Eject Model" on top right and load again as on #Step 1.2)
+
+<p align="center">
+   <img src="./images/blank-preset.PNG" style="width:auto;height:auto;"/>
+</p>
+
 ### 2 - Start MyWaifu
 To start MyWaifu is very simple 
 
