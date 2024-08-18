@@ -148,6 +148,8 @@ A very important step is to make the system prompt blank either by deleting what
 
 Otherwise it can "confuse" the AI. The default configurations of MyWaifu can guarantee it'll follow the character most of the times
 
+(⚠️ In case you already loaded the model I recommend to click "Eject Model" on top right and load again as on #Step 1.2)
+
 <p align="center">
    <img src="./images/blank-preset.PNG" style="width:auto;height:auto;"/>
 </p>
