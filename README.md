@@ -1,3 +1,7 @@
+<p align="center">
+   <img src="https://i.redd.it/p3zp4ve5al8a1.png" style="width:250px;height:auto;"/>
+</p>
+
 <h3 align="center">MyWaifu</h3>
 
 <div align="center">
