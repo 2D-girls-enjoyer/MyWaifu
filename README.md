@@ -1,6 +1,7 @@
 <p align="center">
    <img src="https://i.redd.it/p3zp4ve5al8a1.png" style="width:250px;height:auto;"/>
 </p>
+
 <h3 align="center">MyWaifu</h3>
 
 <div align="center">
@@ -76,9 +77,9 @@ Download it here: https://lmstudio.ai/
 
 Now install MyWaifu. 
 
-You can download the zip right here on GitHub
+You can download the zip or tar.gz right here on GitHub - https://github.com/2D-girls-enjoyer/MyWaifu/releases
 
-Here is a guide on how to download from GitHub: https://blog.hubspot.com/website/download-from-github#repository
+Also, here is a guide on how to download from GitHub: https://blog.hubspot.com/website/download-from-github#repository
 
 
 ### Done!!!
