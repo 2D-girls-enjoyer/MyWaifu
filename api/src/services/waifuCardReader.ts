@@ -11,7 +11,7 @@ class WaifuCardReader {
       name: '',
       decription: '',
       intialReply: '',
-      chatExample: undefined,
+      chatExample: '',
     };
 
     waifuCard.name = regexToGetBetweenBracket.exec(content)?.[1]?.trim() || '';
@@ -35,7 +35,12 @@ class WaifuCardReader {
       throw new Error('Waifu initial reply was not given');
     }
 
-    waifuCard.chatExample = regexToGetBetweenBracket.exec(content)?.[1];
+    waifuCard.chatExample = regexToGetBetweenBracket.exec(content)?.[1] || '';
+
+    if (waifuCard.chatExample === '') {
+      console.log('Waifu chat example not found\nCheck the card txt');
+      throw new Error('Waifu chat example was not given');
+    }
 
     return waifuCard;
   }

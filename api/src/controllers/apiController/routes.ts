@@ -11,5 +11,6 @@ routes.get('/username', asyncHandler(apiController.getUsername));
 routes.post('/username', asyncHandler(apiController.setUsername));
 
 routes.get('/chat', asyncHandler(apiController.getChat));
+routes.delete('/chat', asyncHandler(apiController.deleteChat));
 
 export default routes;

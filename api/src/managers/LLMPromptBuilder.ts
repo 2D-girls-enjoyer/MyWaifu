@@ -18,7 +18,8 @@ class LLMPromptBuilder {
     try {
       const corePrompt = await fs.readFile(resourcesPlace.LLM_PROMP_CORE_PATH, 'utf8');
       const { prompt } = JSON.parse(corePrompt) as ICorePrompt;
-      this.CHAT_PROMPT = this.resolvePlaceholders(prompt, waifuCard);
+      this.CHAT_PROMPT = this.resolveConstantPlaceholders(prompt, waifuCard);
+      console.log(this);
     } catch (err) {
       if (err) {
         console.log(
@@ -44,13 +45,55 @@ class LLMPromptBuilder {
       repliesPrompt += `\n${mostRecentReplies[i].sender !== waifuName ? username : waifuName}: "${mostRecentReplies[i].content}"`;
     }
 
-    return `${this.CHAT_PROMPT.replaceAll('{{lastMsg}}', repliesPrompt)}, ${waifuName}'s next response:`;
+    return `${this.CHAT_PROMPT.replace('{{lastMsg}}', repliesPrompt)}`;
   }
 
-  private resolvePlaceholders(prompts: string, waifuCard: IWaifuCard): string {
-    return prompts
+  // private methods
+
+  private resolveConstantPlaceholders(prompts: string, waifuCard: IWaifuCard): string {
+    let chatExample = '';
+
+    waifuCard.chatExample
+      ?.split(';')
+      ?.forEach((value) => {
+        const [sender, message] = value.split(':');
+        chatExample += `\n${sender.trim()}: "${message.trim()}"`;
+      });
+
+    return this.resolveConditionals(prompts, waifuCard)
       .replaceAll('{{waifu}}', waifuCard.name)
-      .replaceAll('{{card_description}}', waifuCard.decription);
+      .replaceAll('{{card_description}}', waifuCard.decription)
+      .replaceAll('{{chat_example}}', chatExample || '');
+  }
+
+  private resolveConditionals(prompts: string, waifuCard: IWaifuCard): string {
+    return prompts.replaceAll(/<%[\s\S]*?%>/g, (match) => {
+      const [condition, value] = match.slice(2, -2).split('|');
+      let content: string | undefined;
+
+      switch (condition.trim().split(' ')?.[1]) {
+        case 'chat_example':
+          if (waifuCard.chatExample) {
+            content = value.trim();
+          }
+          break;
+        case 'waifu':
+          if (waifuCard.name) {
+            content = value.trim();
+          }
+          break;
+        case 'card_description':
+          if (waifuCard.decription) {
+            content = value.trim();
+          }
+          break;
+        default:
+          console.log('Invalid IF condition');
+          break;
+      }
+
+      return content || '';
+    });
   }
 }
 

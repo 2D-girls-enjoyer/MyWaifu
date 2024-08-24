@@ -46,6 +46,15 @@ class ChatRepository {
     }
   }
 
+  public async deleteAllReplies(waifuPack: string): Promise<void> {
+    console.log(`${resourcesConstants.DATA_PATH}/${waifuPack}`);
+
+    await fileUtils.delete(
+      `${resourcesConstants.DATA_PATH}/${waifuPack}`,
+      'recentChat.json',
+    );
+  }
+
   private capIfNecessary(replies: IReply[]): void {
     if (replies.length >= resourcesConstants.REPLIES_MAX_AMOUNT_SAVE) {
       replies.shift();

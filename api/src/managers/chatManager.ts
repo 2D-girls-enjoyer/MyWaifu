@@ -34,6 +34,10 @@ class ChatManager {
   public async getReplies(waifuPack: string) {
     return chatRepository.getReplies(waifuPack);
   }
+
+  public async deleteAllReplies(waifuPack: string) {
+    await chatRepository.deleteAllReplies(waifuPack);
+  }
 }
 
 export default new ChatManager();

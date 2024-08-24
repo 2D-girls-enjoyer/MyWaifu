@@ -10,7 +10,7 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "description": "Core api for AI Kanojo",
+  "description": "Core api for MyWaifu",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.19.2",

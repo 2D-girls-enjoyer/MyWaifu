@@ -40,6 +40,16 @@ class FileSystemUtils {
 
     await fs.writeFile(`${directory}/${fileName}`, content);
   }
+
+  public async delete(directory: string, fileName: string): Promise<void> {
+    try {
+      await fs.unlink(`${directory}/${fileName}`);
+    } catch (err: any) {
+      console.log(err);
+
+      console.log(`${directory}/${fileName} may already have been deleted`);
+    }
+  }
 }
 
 export default new FileSystemUtils();

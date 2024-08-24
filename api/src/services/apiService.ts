@@ -55,6 +55,10 @@ class ApiService {
   public async getChat(): Promise<IChatSummaryResponse> {
     return { chatSummary: await chatManager.getReplies(waifuManager.PACK) };
   }
+
+  public async deleteChat(): Promise<void> {
+    await chatManager.deleteAllReplies(waifuManager.PACK);
+  }
 }
 
 export default new ApiService();
