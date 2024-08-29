@@ -7,7 +7,7 @@ import { IReply } from '../models/interfaces/IReply';
 class LLMPromptBuilder {
   private CHAT_PROMPT: string = '';
 
-  private readonly MAX_CHAT_REPLY = 10;
+  private readonly MAX_CHAT_REPLY = 9;
 
   /**
  * Pre load prompt with waifu's name and descriptions to build prompt faster
@@ -19,7 +19,6 @@ class LLMPromptBuilder {
       const corePrompt = await fs.readFile(resourcesPlace.LLM_PROMP_CORE_PATH, 'utf8');
       const { prompt } = JSON.parse(corePrompt) as ICorePrompt;
       this.CHAT_PROMPT = this.resolveConstantPlaceholders(prompt, waifuCard);
-      console.log(this);
     } catch (err) {
       if (err) {
         console.log(

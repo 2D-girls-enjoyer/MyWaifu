@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import resourcesConstants from '../configurations/resourcesConstants';
 import { IChatStorage, IReply } from '../models/interfaces/IReply';
 import fileUtils from '../utils/fileUtils';
+import customConfigurations from '../configurations/customConfigurations';
 
 class ChatRepository {
   public async saveReply(reply: IReply, waifuPack: string): Promise<IReply[]> {
@@ -56,7 +57,7 @@ class ChatRepository {
   }
 
   private capIfNecessary(replies: IReply[]): void {
-    if (replies.length >= resourcesConstants.REPLIES_MAX_AMOUNT_SAVE) {
+    if (replies.length >= customConfigurations.REPLIES_MAX_AMOUNT_SAVE) {
       replies.shift();
     }
   }
