@@ -2,42 +2,42 @@ import { API_DOMAIN } from '../../constants/network';
 import store from '../../store/store';
 
 interface NavbarProps {
-  onUsernameModalClick: VoidFunction,
-  onWaifuSelectModalClick: VoidFunction,
+  onMenuClick: VoidFunction
 }
 
-function Navbar({ onUsernameModalClick, onWaifuSelectModalClick }: NavbarProps) {
+function Navbar({ onMenuClick }: NavbarProps) {
   return (
     <div className="flex bg-color-navbar-background drop-shadow-sm h-full w-full">
       <div className="basis-1/3 flex justify-center">
-        {store.waifuName !== '' && (
-        <img
-          className="rounded-md h-12 w-12 mr-2 self-center"
-          src={`${API_DOMAIN}/static/${store.waifuName}/profile.jpg`}
-          loading="lazy"
-        />
-        )}
-        <h3 className="text-primary-text-color text-2xl font-extrabold self-center">
-          {store.waifuName === '' ? 'MyWaifu Project' : store.waifuName}
-        </h3>
+        <p className="text-primary-text-color lg:text-4xl md:text-xl sm:text-xs font-extrabold self-center">
+          MyWaifu
+        </p>
       </div>
-      <div className="basis-2/3 flex flex-row space-x-5 justify-end pr-8">
+      <div className="basis-full flex flex-row w-full">
+        <div className="basis-full">
+          {store.waifuName !== '' && (
+            <div className="ml-6 lg:ml-10 md:ml-8 sm:ml-6 h-full w-full flex self-center">
+              <img
+                className="rounded-md h-12 w-12 mr-2 self-center"
+                src={`${API_DOMAIN}/static/${store.waifuName}/profile.jpg`}
+                loading="lazy"
+              />
+              <p className="text-primary-text-color lg:text-2xl font-bold self-center">{store.waifuName}</p>
+            </div>
+
+          )}
+        </div>
         <button
-          onClick={onWaifuSelectModalClick}
+          onClick={() => onMenuClick()}
           type="button"
-          className="h-fit self-center outline outline-4 outline-offset-1
-          outline-primary-color rounded-md text-xl text-primary-text-color font-bold p-0.5 "
+          aria-label="Menu"
+          className="mr-8 space-y-1"
         >
-          SELECT WAIFU
+          <div className="w-6 h-1 bg-primary-color" />
+          <div className="w-6 h-1 bg-primary-color" />
+          <div className="w-6 h-1 bg-primary-color" />
         </button>
-        <button
-          onClick={onUsernameModalClick}
-          type="button"
-          className="h-fit self-center outline outline-4 outline-offset-1
-          outline-primary-color rounded-md text-xl text-primary-text-color font-bold p-0.5 "
-        >
-          SET USERNAME
-        </button>
+
       </div>
     </div>
   );

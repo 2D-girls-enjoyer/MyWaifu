@@ -6,15 +6,20 @@ import MainChat from './pages/main-chat/mainChat';
 import store from './store/store';
 import http from './infra/http';
 import { API_DOMAIN } from './constants/network';
+import Slidebar from './components/slidebar/slidebar';
 
 const App = observer(() => {
   const localStore = useLocalObservable(() => ({
     waifuList: [] as string[],
+    openSlidebar: false,
     openUsernameModal: false,
     openSelectWaifuModal: false,
 
     setWaifuList(waifuList: string[]) {
       this.waifuList = waifuList;
+    },
+    setOpenSlidebar(isOpen: boolean) {
+      this.openSlidebar = isOpen;
     },
     setOpenUsernameModal(isOpen: boolean) {
       this.openUsernameModal = isOpen;
@@ -50,6 +55,7 @@ const App = observer(() => {
     }
 
     localStore.setOpenSelectWaifuModal(false);
+    localStore.setOpenSlidebar(false);
   };
 
   useEffect(() => {
@@ -65,11 +71,8 @@ const App = observer(() => {
   return (
     <main className="theme-main">
       <div className="w-dvw h-dvh flex flex-col overscroll-contain">
-        <div className="sticky top-0 w-full flex-none h-14">
-          <Navbar
-            onWaifuSelectModalClick={async () => openWaifuSelectionModel()}
-            onUsernameModalClick={() => localStore.setOpenUsernameModal(true)}
-          />
+        <div className="sticky top-0 w-full flex-none h-16">
+          <Navbar onMenuClick={() => localStore.setOpenSlidebar(true)} />
         </div>
         <div className="w-full h-full flex flex-row overflow-y-hidden">
           <div className="bg-black basis-1/3">
@@ -144,6 +147,14 @@ const App = observer(() => {
           />
         </div>
       </Modal>
+
+      {/* Menu Slidebar */}
+      <Slidebar
+        onClose={() => { localStore.setOpenSlidebar(false); }}
+        onWaifuSelectModalClick={async () => openWaifuSelectionModel()}
+        onUsernameModalClick={() => localStore.setOpenUsernameModal(true)}
+        open={localStore.openSlidebar}
+      />
     </main>
   );
 });
