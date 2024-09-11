@@ -14,6 +14,7 @@ const MainChat = observer(() => {
   const localStore = useLocalObservable(() => ({
     chat: [] as IReply[],
     lockSendResponse: true,
+    isWaifuTyping: false,
 
     appendReply(reply: IReply) {
       this.chat.push(reply);
@@ -25,6 +26,10 @@ const MainChat = observer(() => {
 
     setLockSendResponse(lock: boolean) {
       this.lockSendResponse = lock;
+    },
+
+    setIsWaifuTyping(isTyping: boolean) {
+      this.isWaifuTyping = isTyping;
     },
   }));
 
@@ -45,13 +50,14 @@ const MainChat = observer(() => {
       date: new Date().toString(),
     });
 
+    localStore.setIsWaifuTyping(true);
     const { response } = await waifuResponsePromise;
     localStore.appendReply({
       content: response,
       sender: store.waifuName,
       date: new Date().toString(),
     });
-
+    localStore.setIsWaifuTyping(false);
     localStore.setLockSendResponse(false);
   };
 
@@ -113,11 +119,29 @@ const MainChat = observer(() => {
         {renderChat()}
         <div ref={chatRef} />
       </div>
-      <div className="flex items-end basis-1/12 mb-8">
-        <ChatTextArea
-          lockSendResponse={localStore.lockSendResponse}
-          onUserSendResponse={({ currentText }) => { handleUserSentResponse(currentText); }}
-        />
+      <div className="flex w-full flex-col items-end basis-1/12 mb-2">
+        <div className="basis-1/2 w-full">
+          <ChatTextArea
+            lockSendResponse={localStore.lockSendResponse}
+            onUserSendResponse={({ currentText }) => { handleUserSentResponse(currentText); }}
+          />
+        </div>
+        <div className="h-8 w-full">
+          {localStore.isWaifuTyping && (
+          <span className="flex w-full space-x-1 mt-2 pl-2">
+            <div className="flex space-x-2 items-center">
+              <div className="h-1 w-1 bg-secondary-color rounded-full animate-bounce [animation-delay:-0.3s]" />
+              <div className="h-1 w-1 bg-secondary-color rounded-full animate-bounce [animation-delay:-0.15s]" />
+              <div className="h-1 w-1 bg-secondary-color rounded-full animate-bounce" />
+            </div>
+            <p className="font-bold text-sm text-primary-text-color/60">
+              {store.waifuName}
+              {' '}
+              is typing
+            </p>
+          </span>
+          )}
+        </div>
       </div>
     </div>
   );
