@@ -14,11 +14,11 @@ class LLMPromptBuilder {
  * @param {string} waifuCard Waifu Card
  * @returns {void}
  */
-  public async load(waifuCard: IWaifuCard): Promise<void> {
+  public async load(waifuCard: IWaifuCard, username: string): Promise<void> {
     try {
       const corePrompt = await fs.readFile(resourcesPlace.LLM_PROMP_CORE_PATH, 'utf8');
       const { prompt } = JSON.parse(corePrompt) as ICorePrompt;
-      this.CHAT_PROMPT = this.resolveConstantPlaceholders(prompt, waifuCard);
+      this.CHAT_PROMPT = this.resolveConstantPlaceholders(prompt, waifuCard, username);
     } catch (err) {
       if (err) {
         console.log(
@@ -49,7 +49,11 @@ class LLMPromptBuilder {
 
   // private methods
 
-  private resolveConstantPlaceholders(prompts: string, waifuCard: IWaifuCard): string {
+  private resolveConstantPlaceholders(
+    prompts: string,
+    waifuCard: IWaifuCard,
+    username: string,
+  ): string {
     let chatExample = '';
 
     waifuCard.chatExample
@@ -60,9 +64,10 @@ class LLMPromptBuilder {
       });
 
     return this.resolveConditionals(prompts, waifuCard)
-      .replaceAll('{{waifu}}', waifuCard.name)
       .replaceAll('{{card_description}}', waifuCard.decription)
-      .replaceAll('{{chat_example}}', chatExample || '');
+      .replaceAll('{{chat_example}}', chatExample || '')
+      .replaceAll('{{waifu}}', waifuCard.name)
+      .replaceAll('{{user}}', username);
   }
 
   private resolveConditionals(prompts: string, waifuCard: IWaifuCard): string {

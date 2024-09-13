@@ -19,7 +19,7 @@ class ApiService {
     const waifuCard = await waifuCardReader.readAsTxt(waifu);
     waifuManager.setWaifu(waifuCard, waifu);
 
-    LLMPromptBuilder.load(waifuManager.CARD);
+    LLMPromptBuilder.load(waifuManager.CARD, await userManager.get());
     await chatManager.load(waifu, waifuCard);
   }
 

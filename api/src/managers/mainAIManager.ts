@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import customConfigurations from '../configurations/customConfigurations';
 import LmStudioRepository from '../repositories/LmStudioRepository';
 
@@ -37,8 +38,9 @@ class MainAIManager {
 
       currentTemperature -= deltaTemperature;
 
-      // eslint-disable-next-line no-await-in-loop
-      response = (await this.generateCompletion(prompt, currentTemperature)).choices[0].text;
+      response = this.sanitizeResponse((
+        await this.generateCompletion(prompt, currentTemperature)
+      ).choices[0].text);
       count++;
     }
 
