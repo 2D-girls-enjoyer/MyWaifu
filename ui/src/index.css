@@ -21,7 +21,14 @@
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.primary { color: rgba(var(--primary-color)) }
+
+/*Tootip cliping */
+
+.clip-top {
+  clip-path: polygon(0 0, 100% 50%, 0 100%)
+}
 
 /* width */
 ::-webkit-scrollbar {

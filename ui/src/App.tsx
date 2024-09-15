@@ -12,6 +12,7 @@ const App = observer(() => {
   const localStore = useLocalObservable(() => ({
     waifuList: [] as string[],
     openSlidebar: false,
+    openChatDeletionModal: false,
     openUsernameModal: false,
     openSelectWaifuModal: false,
 
@@ -21,6 +22,9 @@ const App = observer(() => {
     setOpenSlidebar(isOpen: boolean) {
       this.openSlidebar = isOpen;
     },
+    setOpenChatDeletionModal(isOpen: boolean) {
+      this.openChatDeletionModal = isOpen;
+    },
     setOpenUsernameModal(isOpen: boolean) {
       this.openUsernameModal = isOpen;
     },
@@ -28,6 +32,11 @@ const App = observer(() => {
       this.openSelectWaifuModal = isOpen;
     },
   }));
+
+  const deleteCurrentChat = async () => {
+    await store.deleteWaifuChat();
+    localStore.setOpenChatDeletionModal(false);
+  };
 
   const saveUsername = () => {
     http.saveUsername({ username: store.username.trim() });
@@ -72,7 +81,10 @@ const App = observer(() => {
     <main className="theme-main">
       <div className="w-dvw h-dvh flex flex-col overscroll-contain">
         <div className="sticky top-0 w-full flex-none h-16">
-          <Navbar onMenuClick={() => localStore.setOpenSlidebar(true)} />
+          <Navbar
+            onMenuClick={() => localStore.setOpenSlidebar(true)}
+            onDeleteChatClick={() => localStore.setOpenChatDeletionModal(true)}
+          />
         </div>
         <div className="w-full h-full flex flex-row overflow-y-hidden">
           <div className="bg-black basis-1/3">
@@ -84,7 +96,33 @@ const App = observer(() => {
         </div>
       </div>
 
-      {/* waifu selection modal */}
+      {/* Menu Slidebar */}
+      <Slidebar
+        onClose={() => { localStore.setOpenSlidebar(false); }}
+        onWaifuSelectModalClick={openWaifuSelectionModel}
+        onUsernameModalClick={() => localStore.setOpenUsernameModal(true)}
+        open={localStore.openSlidebar}
+      />
+
+      {/* Chat deletion modal */}
+      <Modal
+        onClose={() => localStore.setOpenChatDeletionModal(false)}
+        confirmationBtnText="Delete"
+        onConfirmationBtnClick={deleteCurrentChat}
+        onCancelBtnClick={() => localStore.setOpenChatDeletionModal(false)}
+        open={localStore.openChatDeletionModal}
+      >
+        <div className="text-center w-96">
+          <h3 className="text-primary-text-color font-bold">
+            DELETE CURRENT CHAT
+          </h3>
+          <p className="text-sm text-primary-text-color/60 mb-6">
+            You will delete current chat forever
+          </p>
+        </div>
+      </Modal>
+
+      {/* Waifu selection modal */}
       <Modal
         onClose={() => localStore.setOpenSelectWaifuModal(false)}
         onConfirmationBtnClick={() => {}}
@@ -121,11 +159,11 @@ const App = observer(() => {
         </div>
       </Modal>
 
-      {/* username modal */}
+      {/* Username modal */}
       <Modal
         onClose={() => localStore.setOpenUsernameModal(false)}
         confirmationBtnText="Save"
-        onConfirmationBtnClick={() => saveUsername()}
+        onConfirmationBtnClick={saveUsername}
         onCancelBtnClick={() => localStore.setOpenUsernameModal(false)}
         open={localStore.openUsernameModal}
       >
@@ -147,14 +185,6 @@ const App = observer(() => {
           />
         </div>
       </Modal>
-
-      {/* Menu Slidebar */}
-      <Slidebar
-        onClose={() => { localStore.setOpenSlidebar(false); }}
-        onWaifuSelectModalClick={async () => openWaifuSelectionModel()}
-        onUsernameModalClick={() => localStore.setOpenUsernameModal(true)}
-        open={localStore.openSlidebar}
-      />
     </main>
   );
 });

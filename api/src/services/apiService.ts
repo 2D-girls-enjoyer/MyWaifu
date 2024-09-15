@@ -58,6 +58,7 @@ class ApiService {
 
   public async deleteChat(): Promise<void> {
     await chatManager.deleteAllReplies(waifuManager.PACK);
+    await chatManager.load(waifuManager.PACK, waifuManager.CARD);
   }
 }
 

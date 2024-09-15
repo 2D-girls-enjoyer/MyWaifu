@@ -48,8 +48,6 @@ class ChatRepository {
   }
 
   public async deleteAllReplies(waifuPack: string): Promise<void> {
-    console.log(`${resourcesConstants.DATA_PATH}/${waifuPack}`);
-
     await fileUtils.delete(
       `${resourcesConstants.DATA_PATH}/${waifuPack}`,
       'recentChat.json',

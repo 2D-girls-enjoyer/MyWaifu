@@ -27,7 +27,7 @@ class ApiController {
   }
 
   public async deleteChat(req: Request, res: Response) {
-    await apiService.deleteChat()
+    await apiService.deleteChat();
     res.status(204).send();
   }
 }

@@ -34,14 +34,14 @@ function Slidebar({
 
         <div className="basis-11/12 divide-y divide-secondary-color">
           <div
-            onClick={() => { onWaifuSelectModalClick(); }}
+            onClick={onWaifuSelectModalClick}
             className="flex content-center p-2 cursor-pointer"
           >
             <span className="basis-1/6 material-icons primary md-36 sm:md-24 lg:md-36">diversity_1</span>
             <p className="basis-5/6 pl-3 self-center text-lg font-bold text-primary-text-color">WAIFUS</p>
           </div>
           <div
-            onClick={() => { onUsernameModalClick(); }}
+            onClick={onUsernameModalClick}
             className="flex content-center p-2 cursor-pointer"
           >
             <span className="basis-1/6 material-icons primary md-36 sm:md-24 lg:md-36">account_circle</span>

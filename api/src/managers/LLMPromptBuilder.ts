@@ -7,7 +7,7 @@ import { IReply } from '../models/interfaces/IReply';
 class LLMPromptBuilder {
   private CHAT_PROMPT: string = '';
 
-  private readonly MAX_CHAT_REPLY = 9;
+  private readonly MAX_CHAT_REPLY = 8;
 
   /**
  * Pre load prompt with waifu's name and descriptions to build prompt faster

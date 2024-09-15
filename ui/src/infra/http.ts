@@ -41,6 +41,12 @@ class Http {
     return (await fetch(`${API_DOMAIN}/chat`)).json();
   }
 
+  public async deleteWaifuChat(): Promise<void> {
+    await fetch(`${API_DOMAIN}/chat`, {
+      method: 'DELETE',
+    });
+  }
+
   public async generateWaifuResponse(
     generateRequest: IWaifuGenerateRequest,
   ): Promise<IWaifuGenerateResponse> {

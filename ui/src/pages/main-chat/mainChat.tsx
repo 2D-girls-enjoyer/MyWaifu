@@ -5,24 +5,14 @@ import ChatBubble from '../../components/chat-bubble/chatBubble';
 import ChatTextArea from '../../components/chat-text-area/chatTextArea';
 import { BelongsTo } from '../../enums/chatBubble';
 import store from '../../store/store';
-import { IReply } from '../../interfaces/ApiRequests';
 import http from '../../infra/http';
 
 const MainChat = observer(() => {
   const chatRef = useRef<HTMLDivElement>(null);
 
   const localStore = useLocalObservable(() => ({
-    chat: [] as IReply[],
     lockSendResponse: true,
     isWaifuTyping: false,
-
-    appendReply(reply: IReply) {
-      this.chat.push(reply);
-    },
-
-    setChat(replies: IReply[]) {
-      this.chat = replies;
-    },
 
     setLockSendResponse(lock: boolean) {
       this.lockSendResponse = lock;
@@ -44,7 +34,7 @@ const MainChat = observer(() => {
     const waifuResponsePromise = http.generateWaifuResponse({
       userReply: userMessageToBeSent,
     });
-    localStore.appendReply({
+    store.appendReply({
       content: userMessageToBeSent,
       sender: 'User',
       date: new Date().toString(),
@@ -52,7 +42,7 @@ const MainChat = observer(() => {
 
     localStore.setIsWaifuTyping(true);
     const { response } = await waifuResponsePromise;
-    localStore.appendReply({
+    store.appendReply({
       content: response,
       sender: store.waifuName,
       date: new Date().toString(),
@@ -62,13 +52,12 @@ const MainChat = observer(() => {
   };
 
   const loadWaifuChatToLocalStore = async () => {
-    const { chatSummary } = await http.getWaifuChat();
-    localStore.setChat(chatSummary);
+    await store.loadWaifuChat();
     localStore.setLockSendResponse(false);
   };
 
-  const renderChat = () => (localStore.chat?.length > 0
-    ? localStore.chat.map((reply) => (
+  const renderChat = () => (store.chat?.length > 0
+    ? store.chat.map((reply) => (
       <div
         key={`${reply.sender}-${reply.date}`}
         className={
@@ -109,7 +98,8 @@ const MainChat = observer(() => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [localStore.chat.length]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [store.chat.length]);
 
   return (
     <div className="flex flex-col w-full h-full bg-chat-background px-2">
