@@ -25,43 +25,32 @@ if not exist dist (
 
     REM Step : Run "npm install --omit=dev"
     echo Installing production dependencies in ./api...
-    call npm install --omit=dev      
+    call npm install --omit=dev
 )
 
-REM Step: Run "npm run start" in the background
-echo Starting the server in ./api...
-start /b npm run starts
+REM Step: Access the "./ui" folder
+cd ../ui
+
+if not exist dist (
+    REM Step: Run "npm i"
+    echo Installing dependencies in ./ui...
+    call npm i
+
+    REM Step: Run "npm run build"
+    echo Building the project in ./ui...
+    call npm run build
+
+    REM Step: Delete the "node_modules" folder
+    echo Deleting node_modules in ./ui...
+    rd /s /q node_modules
+
+    REM Step: Run "npm install --omit=dev"
+    echo Installing production dependencies in ./ui...
+    call npm install --omit=dev
+)
 
 REM Step: Return to the previous folder
 cd ..
 
-REM Step: Access the "./ui" folder
-cd ./ui
-
-if not exist dist (
-        REM Step: Run "npm i"
-        echo Installing dependencies in ./ui...
-        call npm i
-
-        REM Step: Run "npm run build"
-        echo Building the project in ./ui...
-        call npm run build
-
-        REM Step: Delete the "node_modules" folder
-        echo Deleting node_modules in ./ui...
-        rd /s /q node_modules
-
-        REM Step: Run "npm install --omit=dev"
-        echo Installing production dependencies in ./ui...
-        call npm install --omit=dev
-)
-REM Step: Run "npm run preview"
-echo Starting the UI preview in ./ui...
-start /b npm run preview
-
-REM Script finished
-echo All done! Servers are running.
-
-start "" http://localhost:4173
-
-pause
+REM Script finished, starting the Servers
+call node scripts/startServers.js

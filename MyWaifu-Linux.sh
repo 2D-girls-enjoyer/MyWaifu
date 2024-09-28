@@ -26,15 +26,8 @@ if [ ! -d dist ]; then
     npm install --omit=dev
 fi
 
-# Step: Run "npm run start" in the background
-echo "Starting the server in ./api..."
-npm run start &
-
-# Step: Return to the previous folder
-cd ..
-
 # Step: Access the "./ui" folder
-cd ./ui
+cd ../ui
 
 if [ ! -d dist ]; then
     # Step: Run "npm i"
@@ -54,11 +47,8 @@ if [ ! -d dist ]; then
     npm install --omit=dev
 fi
 
-# Step: Run "npm run preview"
-echo "Starting the UI preview in ./ui..."
-npm run preview &
+# Step: Return to the previous folder
+cd ..
 
-# Script finished
-echo "All done! Servers are running."
-
-xdg-open http://localhost:4173
+# Script finished, starting the Servers
+node scripts/startServers.js
