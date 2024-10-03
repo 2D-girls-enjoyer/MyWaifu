@@ -5,8 +5,9 @@ import Navbar from './components/navbar/navbar';
 import MainChat from './pages/main-chat/mainChat';
 import store from './store/store';
 import http from './infra/http';
-import { API_DOMAIN } from './constants/network';
+import { API_DOMAIN } from './constants';
 import Slidebar from './components/slidebar/slidebar';
+import AlertStack from './components/alert-stack/alertStack';
 
 const App = observer(() => {
   const localStore = useLocalObservable(() => ({
@@ -39,8 +40,7 @@ const App = observer(() => {
   };
 
   const saveUsername = () => {
-    http.saveUsername({ username: store.username.trim() });
-    store.setUsername(store.username.trim());
+    store.saveUsername();
     localStore.setOpenUsernameModal(false);
   };
 
@@ -58,11 +58,7 @@ const App = observer(() => {
   };
 
   const selectWaifu = async (waifu: string) => {
-    if (waifu !== store.waifuName) {
-      await http.selectWaifu({ waifu });
-      store.setWaifuName(waifu);
-    }
-
+    await store.selectWaifu(waifu);
     localStore.setOpenSelectWaifuModal(false);
     localStore.setOpenSlidebar(false);
   };
@@ -80,6 +76,9 @@ const App = observer(() => {
   return (
     <main className="theme-main">
       <div className="w-dvw h-dvh flex flex-col overscroll-contain">
+        <div className="absolute z-50 left-1/2 transform -translate-x-1/2 w-fit h-min mt-4">
+          <AlertStack />
+        </div>
         <div className="sticky top-0 w-full flex-none h-16">
           <Navbar
             onMenuClick={() => localStore.setOpenSlidebar(true)}
@@ -95,6 +94,8 @@ const App = observer(() => {
           </div>
         </div>
       </div>
+
+      {/* Modals and slidebars */}
 
       {/* Menu Slidebar */}
       <Slidebar

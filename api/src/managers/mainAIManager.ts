@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import customConfigurations from '../configurations/customConfigurations';
-import LmStudioRepository from '../repositories/LmStudioRepository';
+import LmStudioRepository from '../repositories/lmStudioRepository';
 
 class MainAIManager {
   private readonly DEFAULT_CHAT_TEMPERATURE = 0.7;

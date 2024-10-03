@@ -26,10 +26,20 @@ module.exports = {
         allowExpressionValues: true,
       },
     ],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        'ts': 'never',
+        'tsx': 'never',
+        'js': 'never',
+        'jsx': 'never'
+      }
+    ],
     'react/require-default-props': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/alt-text': 'off',
     'class-methods-use-this': 'off',
-    'import/prefer-default-export': 'off'
+    'import/prefer-default-export': 'off',
   },
 }

@@ -3,7 +3,7 @@ import { IWaifuCard } from '../models/interfaces/IWaifuCard';
 import resourcesPlace from '../configurations/resourcesConstants';
 
 class WaifuCardReader {
-  public async readAsTxt(waifuPack: string): Promise<IWaifuCard> {
+  public async readFromTxt(waifuPack: string): Promise<IWaifuCard> {
     const regexToGetBetweenBracket = /\[(.*?)\]/g;
     const content = await fs
       .readFile(`${resourcesPlace.WAIFU_PACK_COLLECTION_PATH}/${waifuPack}/card.txt`, 'utf-8');

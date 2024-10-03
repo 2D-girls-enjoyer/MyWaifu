@@ -1,4 +1,4 @@
-import { API_DOMAIN } from '../../constants/network';
+import { API_DOMAIN } from '../../constants';
 import store from '../../store/store';
 import Tooltip from '../tooltip/tooltip';
 

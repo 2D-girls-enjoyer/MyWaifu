@@ -10,7 +10,7 @@ class ChatManager {
       return;
     }
 
-    chatRepository.saveReply(
+    await chatRepository.saveReply(
       {
         content: waifuCard.intialReply,
         sender: waifuCard.name,

@@ -3,9 +3,12 @@ import { observer, useLocalObservable } from 'mobx-react';
 import { reaction } from 'mobx';
 import ChatBubble from '../../components/chat-bubble/chatBubble';
 import ChatTextArea from '../../components/chat-text-area/chatTextArea';
-import { BelongsTo } from '../../enums/chatBubble';
+import { BelongsTo } from '../../models/enums/chatBubble';
 import store from '../../store/store';
-import http from '../../infra/http';
+import ErrorFetch from '../../models/errors/errorFetch';
+import { ErrorName } from '../../models/errors/enum/errorName';
+import alertStore from '../../store/alertStore';
+import { AlertType } from '../../models/enums/alertType';
 
 const MainChat = observer(() => {
   const chatRef = useRef<HTMLDivElement>(null);
@@ -31,22 +34,30 @@ const MainChat = observer(() => {
 
   const handleUserSentResponse = async (userMessageToBeSent: string) => {
     localStore.setLockSendResponse(true);
-    const waifuResponsePromise = http.generateWaifuResponse({
-      userReply: userMessageToBeSent,
-    });
-    store.appendReply({
-      content: userMessageToBeSent,
-      sender: 'User',
-      date: new Date().toString(),
-    });
-
     localStore.setIsWaifuTyping(true);
-    const { response } = await waifuResponsePromise;
-    store.appendReply({
-      content: response,
-      sender: store.waifuName,
-      date: new Date().toString(),
-    });
+    try {
+      await store.generateChat(userMessageToBeSent);
+    } catch (err: any) {
+      if (err instanceof ErrorFetch) {
+        switch (err.errorName) {
+          case ErrorName.CONNECTION_REFUSED:
+            alertStore.addAlert({
+              type: AlertType.ERROR,
+              message: 'Make sure the the LM Studio is running and with it\'s server on. Check the simplified "Usage guide" at: https://github.com/2D-girls-enjoyer/MyWaifu',
+            });
+            break;
+          case ErrorName.IRREGULAR_LOADED_MODEL_QUANTITY:
+            alertStore.addAlert({
+              type: AlertType.ERROR,
+              message: 'LmStudio should be loaded with one model only. Check the simplified "Usage guide" at: https://github.com/2D-girls-enjoyer/MyWaifu',
+            });
+            break;
+          default:
+            alertStore.addAlert({ type: AlertType.UNKNOWN, message: 'Unknown UI error occured' });
+        }
+      }
+    }
+
     localStore.setIsWaifuTyping(false);
     localStore.setLockSendResponse(false);
   };

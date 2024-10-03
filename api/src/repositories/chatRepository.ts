@@ -3,9 +3,16 @@ import resourcesConstants from '../configurations/resourcesConstants';
 import { IChatStorage, IReply } from '../models/interfaces/IReply';
 import fileUtils from '../utils/fileUtils';
 import customConfigurations from '../configurations/customConfigurations';
+import ProcessError from '../models/errors/ProcessError';
+import ErrorSubType from '../models/errors/enum/errorSubType';
 
 class ChatRepository {
+  // TEMPORARY!!! On prototype 3 (last) I'll test saving/control chat on SQLite
   public async saveReply(reply: IReply, waifuPack: string): Promise<IReply[]> {
+    if (!waifuPack || waifuPack === '') {
+      throw new ProcessError('', ErrorSubType.WAIFU_NOT_SELECTED);
+    }
+
     let chat: IReply[];
 
     try {

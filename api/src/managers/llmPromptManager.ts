@@ -4,7 +4,7 @@ import { ICorePrompt } from '../models/interfaces/ICorePrompt';
 import { IWaifuCard } from '../models/interfaces/IWaifuCard';
 import { IReply } from '../models/interfaces/IReply';
 
-class LLMPromptBuilder {
+class LLMPromptManager {
   private CHAT_PROMPT: string = '';
 
   private readonly MAX_CHAT_REPLY = 8;
@@ -101,4 +101,4 @@ class LLMPromptBuilder {
   }
 }
 
-export default new LLMPromptBuilder();
+export default new LLMPromptManager();

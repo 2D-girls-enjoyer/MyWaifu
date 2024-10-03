@@ -15,3 +15,9 @@ export interface IUsernameResponse {
 export interface IChatSummaryResponse {
   chatSummary: IReply[]
 }
+
+export interface IErrorResponse {
+  code: number;
+  errorName: string;
+  message: string;
+}

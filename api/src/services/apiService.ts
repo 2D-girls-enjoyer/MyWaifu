@@ -4,7 +4,7 @@ import {
   IWaifuSelectionRequest,
 } from '../models/interfaces/IApiRequest';
 import chatManager from '../managers/chatManager';
-import LLMPromptBuilder from '../managers/LLMPromptBuilder';
+import LLMPromptManager from '../managers/llmPromptManager';
 import mainAIManager from '../managers/mainAIManager';
 import userManager from '../managers/userManager';
 import waifuCardReader from './waifuCardReader';
@@ -16,15 +16,11 @@ import {
 
 class ApiService {
   public async selectWaifu({ waifu }: IWaifuSelectionRequest): Promise<void> {
-    const waifuCard = await waifuCardReader.readAsTxt(waifu);
+    const waifuCard = await waifuCardReader.readFromTxt(waifu);
     waifuManager.setWaifu(waifuCard, waifu);
 
-    LLMPromptBuilder.load(waifuManager.CARD, await userManager.get());
+    LLMPromptManager.load(waifuManager.CARD, await userManager.get());
     await chatManager.load(waifu, waifuCard);
-  }
-
-  public async getAvailableWaifuPacks(): Promise<IWaifuPacksResponse> {
-    return { waifus: await waifuPacksService.getAll() };
   }
 
   public async generate({ userReply }: IGenerateRequest): Promise<IGenerateResponse> {
@@ -33,7 +29,7 @@ class ApiService {
       waifuManager.PACK,
     );
     const waifuAnswer = await mainAIManager.generate(
-      LLMPromptBuilder.buildChatPrompt(replies, waifuManager.CARD.name, await userManager.get()),
+      LLMPromptManager.buildChatPrompt(replies, waifuManager.CARD.name, await userManager.get()),
     );
     chatManager.saveReply(
       waifuAnswer,
@@ -42,6 +38,10 @@ class ApiService {
     );
 
     return { response: waifuAnswer };
+  }
+
+  public async getAvailableWaifuPacks(): Promise<IWaifuPacksResponse> {
+    return { waifus: await waifuPacksService.getAll() };
   }
 
   public async setUsername({ username }: ISetUsernameRequest): Promise<void> {
