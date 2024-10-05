@@ -56,12 +56,14 @@ class LLMPromptManager {
   ): string {
     let chatExample = '';
 
-    waifuCard.chatExample
-      ?.split(';')
-      ?.forEach((value) => {
-        const [sender, message] = value.split(':');
-        chatExample += `\n${sender.trim()}: "${message.trim()}"`;
-      });
+    if (waifuCard.chatExample || waifuCard.chatExample !== '') {
+      waifuCard.chatExample
+        ?.split(';')
+        ?.forEach((value) => {
+          const [sender, message] = value.split(':');
+          chatExample += `\n${sender.trim()}: "${message.trim()}"`;
+        });
+    }
 
     return this.resolveConditionals(prompts, waifuCard)
       .replaceAll('{{card_description}}', waifuCard.decription)

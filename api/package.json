@@ -13,10 +13,9 @@
   "description": "Core api for MyWaifu",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.19.2",
+    "express": "^4.21.0",
     "express-async-handler": "^1.2.0",
-    "typescript": "^5.5.2",
-    "undici": "^6.19.2"
+    "undici": "^6.19.8"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
@@ -27,6 +26,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^18.0.0",
     "nodemon": "^3.1.0",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
   }
 }

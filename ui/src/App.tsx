@@ -134,7 +134,7 @@ const App = observer(() => {
           <h3 className="text-primary-text-color font-bold">
             CHOOSE YOUR WAIFU
           </h3>
-          <div className="flex my-9 px-12">
+          <div className="flex flex-col my-9 px-12">
             {localStore.waifuList.map((waifu) => (
               <button
                 type="button"
