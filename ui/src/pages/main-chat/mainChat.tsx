@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react';
 import { observer, useLocalObservable } from 'mobx-react';
 import { reaction } from 'mobx';
@@ -56,10 +57,10 @@ const MainChat = observer(() => {
             alertStore.addAlert({ type: AlertType.UNKNOWN, message: 'Unknown UI error occured' });
         }
       }
+    } finally {
+      localStore.setIsWaifuTyping(store.isWaifuTyping(store.waifuName));
+      localStore.setLockSendResponse(false);
     }
-
-    localStore.setIsWaifuTyping(false);
-    localStore.setLockSendResponse(false);
   };
 
   const loadWaifuChatToLocalStore = async () => {
@@ -109,8 +110,11 @@ const MainChat = observer(() => {
 
   useEffect(() => {
     scrollToBottom();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [store.chat.length]);
+
+  useEffect(() => {
+    localStore.setIsWaifuTyping(store.isWaifuTyping(store.waifuName));
+  }, [store.waifuName]);
 
   return (
     <div className="flex flex-col w-full h-full bg-chat-background px-2">

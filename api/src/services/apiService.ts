@@ -19,25 +19,32 @@ class ApiService {
     const waifuCard = await waifuCardReader.readFromTxt(waifu);
     waifuManager.setWaifu(waifuCard, waifu);
 
-    LLMPromptManager.load(waifuManager.CARD, await userManager.get());
-    await chatManager.load(waifu, waifuCard);
+    await Promise.all([
+      LLMPromptManager.load(waifuManager.CARD, await userManager.get()),
+      chatManager.load(waifu, waifuCard)
+    ]);    
   }
 
   public async generate({ userReply }: IGenerateRequest): Promise<IGenerateResponse> {
-    const replies = await chatManager.saveReply(
-      userReply,
-      waifuManager.PACK,
-    );
-    const waifuAnswer = await mainAIManager.generate(
-      LLMPromptManager.buildChatPrompt(replies, waifuManager.CARD.name, await userManager.get()),
-    );
-    chatManager.saveReply(
-      waifuAnswer,
+    const { response, waifuPack, waifuName } = await mainAIManager.generate(
+      LLMPromptManager.buildChatPrompt(
+        await chatManager.saveReply(
+          userReply,
+          waifuManager.PACK,
+        ),
+        waifuManager.CARD.name,
+        await userManager.get(),
+      ),
       waifuManager.PACK,
       waifuManager.CARD.name,
     );
+    await chatManager.saveReply(
+      response,
+      waifuPack,
+      waifuName,
+    );
 
-    return { response: waifuAnswer };
+    return { response, waifuPack };
   }
 
   public async getAvailableWaifuPacks(): Promise<IWaifuPacksResponse> {

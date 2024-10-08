@@ -31,6 +31,7 @@ export interface IWaifuGenerateRequest {
 }
 
 export interface IWaifuGenerateResponse {
+  waifuPack: string;
   response: string;
 }
 

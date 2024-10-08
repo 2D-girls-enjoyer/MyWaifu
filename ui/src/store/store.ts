@@ -1,6 +1,10 @@
-import { action, makeObservable, observable } from 'mobx';
+import {
+  action, makeObservable, observable,
+} from 'mobx';
 import http from '../infra/http';
-import { IReply } from '../models/interfaces/apiRequests';
+import {
+  IChatSummaryResponse, IReply, IUsernameResponse, IWaifuGenerateResponse,
+} from '../models/interfaces/apiRequests';
 import ErrorFetch from '../models/errors/errorFetch';
 import { ErrorName } from '../models/errors/enum/errorName';
 
@@ -21,15 +25,20 @@ class Store {
 
   chat: IReply[] = [];
 
+  waifusTyping: string[] = [];
+
   constructor() {
     makeObservable(this, {
       waifuName: observable,
       username: observable,
       chat: observable,
+      waifusTyping: observable,
       setWaifuName: action,
       setUsername: action,
       setChat: action,
       appendReply: action,
+      appendWaifuTyping: action,
+      isWaifuTyping: action,
       generateChat: action,
       selectWaifu: action,
       loadWaifuChat: action,
@@ -55,21 +64,52 @@ class Store {
     this.chat.push(reply);
   }
 
+  appendWaifuTyping(waifu: string) {
+    this.waifusTyping.push(waifu);
+  }
+
+  removeWaifuTyping(waifu: string) {
+    const indexToRemove = this.waifusTyping.indexOf(waifu);
+
+    if (indexToRemove > -1) {
+      this.waifusTyping.splice(indexToRemove, 1);
+    }
+  }
+
+  isWaifuTyping(waifu: string): boolean {
+    return this.waifusTyping.indexOf(waifu) > -1;
+  }
+
   async generateChat(userMessageToBeSent: string) {
-    const waifuResponsePromise = this.fetch(FetchOperation.GENERATE_RESPONSE, {
+    const waifuResponsePromise = this
+      .fetch<IWaifuGenerateResponse>(FetchOperation.GENERATE_RESPONSE, {
       userReply: userMessageToBeSent,
     });
+    this.appendWaifuTyping(this.waifuName);
+    const waifuName = `${this.waifuName}`;
+    let response: string;
     this.appendReply({
       content: userMessageToBeSent,
       sender: 'User',
       date: new Date().toString(),
     });
-    const { response } = await waifuResponsePromise;
-    this.appendReply({
-      content: response,
-      sender: this.waifuName,
-      date: new Date().toString(),
-    });
+
+    try {
+      response = (await waifuResponsePromise)?.response;
+    } catch (err: any) {
+      this.removeWaifuTyping(waifuName);
+      throw err;
+    }
+
+    this.removeWaifuTyping(waifuName);
+
+    if (this.waifuName === waifuName) {
+      this.appendReply({
+        content: response,
+        sender: waifuName,
+        date: new Date().toString(),
+      });
+    }
   }
 
   async selectWaifu(waifu: string) {
@@ -80,18 +120,18 @@ class Store {
   }
 
   async loadWaifuChat() {
-    const { chatSummary } = await this.fetch(FetchOperation.GET_CHAT);
+    const { chatSummary } = await this.fetch<IChatSummaryResponse>(FetchOperation.GET_CHAT);
     this.setChat(chatSummary);
   }
 
   async deleteWaifuChat() {
     await this.fetch(FetchOperation.DELETE_WAIFU);
-    const { chatSummary } = await this.fetch(FetchOperation.GET_CHAT);
+    const { chatSummary } = await this.fetch<IChatSummaryResponse>(FetchOperation.GET_CHAT);
     this.setChat(chatSummary);
   }
 
   async loadUsername() {
-    const { username } = await this.fetch(FetchOperation.GET_USERNAME);
+    const { username } = await this.fetch<IUsernameResponse>(FetchOperation.GET_USERNAME);
     this.setUsername(username);
   }
 
@@ -100,15 +140,15 @@ class Store {
     this.setUsername(this.username.trim());
   }
 
-  private async fetch(operation: FetchOperation, args?: any): Promise<any> {
+  private async fetch<T>(operation: FetchOperation, args?: any): Promise<T> {
     try {
-      return await this.executeFetchOperation(operation, args);
+      return await this.executeFetchOperation(operation, args) as T;
     } catch (err: any) {
       if (err instanceof ErrorFetch
         && err?.errorName === ErrorName.WAIFU_NOT_SELECTED
         && this.waifuName !== '') {
         await this.fetch(FetchOperation.SELECT_WAIFU, { waifu: this.waifuName });
-        return this.executeFetchOperation(operation, args);
+        return this.executeFetchOperation(operation, args) as T;
       }
 
       throw err;

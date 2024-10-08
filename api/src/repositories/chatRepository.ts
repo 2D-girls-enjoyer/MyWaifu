@@ -22,8 +22,6 @@ class ChatRepository {
         console.log(`Unexpected error at access ${waifuPack} chat summary`);
         throw new Error(`Unexpected error at access ${waifuPack} chat summary`);
       }
-
-      console.log(`Chat summary for ${waifuPack} does not exist`);
       chat = [];
     }
 

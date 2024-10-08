@@ -15,7 +15,7 @@ class FileSystemUtils {
           throw new Error(`Unexpected error reading file ${directory}/${fileName}`);
         }
         const content = '';
-        this.write(directory, fileName, content, true);
+        await this.write(directory, fileName, content, true);
 
         return content;
       }

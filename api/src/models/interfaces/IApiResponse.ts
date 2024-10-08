@@ -1,7 +1,8 @@
 import { IReply } from './IReply';
 
 export interface IGenerateResponse {
-  response: string
+  waifuPack: string;
+  response: string;
 }
 
 export interface IWaifuPacksResponse {
