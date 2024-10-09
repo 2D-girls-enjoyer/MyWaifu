@@ -4,7 +4,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "dev": "nodemon",
-    "build": "tsc",
+    "build": "tsc && gulp minify-js",
     "starts": "node ./dist/index.js"
   },
   "keywords": [],
@@ -25,7 +25,11 @@
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^18.0.0",
+    "gulp": "^5.0.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-terser": "^2.1.0",
     "nodemon": "^3.1.0",
+    "terser": "^5.34.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   }
