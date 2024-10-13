@@ -5,16 +5,26 @@ import Navbar from './components/navbar/navbar';
 import MainChat from './pages/main-chat/mainChat';
 import store from './store/store';
 import http from './infra/http';
-import { API_DOMAIN } from './constants/network';
+import { API_DOMAIN } from './constants';
+import Slidebar from './components/slidebar/slidebar';
+import AlertStack from './components/alert-stack/alertStack';
 
 const App = observer(() => {
   const localStore = useLocalObservable(() => ({
     waifuList: [] as string[],
+    openSlidebar: false,
+    openChatDeletionModal: false,
     openUsernameModal: false,
     openSelectWaifuModal: false,
 
     setWaifuList(waifuList: string[]) {
       this.waifuList = waifuList;
+    },
+    setOpenSlidebar(isOpen: boolean) {
+      this.openSlidebar = isOpen;
+    },
+    setOpenChatDeletionModal(isOpen: boolean) {
+      this.openChatDeletionModal = isOpen;
     },
     setOpenUsernameModal(isOpen: boolean) {
       this.openUsernameModal = isOpen;
@@ -24,9 +34,13 @@ const App = observer(() => {
     },
   }));
 
+  const deleteCurrentChat = async () => {
+    await store.deleteWaifuChat();
+    localStore.setOpenChatDeletionModal(false);
+  };
+
   const saveUsername = () => {
-    http.saveUsername({ username: store.username.trim() });
-    store.setUsername(store.username.trim());
+    store.saveUsername();
     localStore.setOpenUsernameModal(false);
   };
 
@@ -44,12 +58,9 @@ const App = observer(() => {
   };
 
   const selectWaifu = async (waifu: string) => {
-    if (waifu !== store.waifuName) {
-      await http.selectWaifu({ waifu });
-      store.setWaifuName(waifu);
-    }
-
+    await store.selectWaifu(waifu);
     localStore.setOpenSelectWaifuModal(false);
+    localStore.setOpenSlidebar(false);
   };
 
   useEffect(() => {
@@ -65,10 +76,13 @@ const App = observer(() => {
   return (
     <main className="theme-main">
       <div className="w-dvw h-dvh flex flex-col overscroll-contain">
-        <div className="sticky top-0 w-full flex-none h-14">
+        <div className="absolute z-50 left-1/2 transform -translate-x-1/2 w-fit h-min mt-4">
+          <AlertStack />
+        </div>
+        <div className="sticky top-0 w-full flex-none h-16">
           <Navbar
-            onWaifuSelectModalClick={async () => openWaifuSelectionModel()}
-            onUsernameModalClick={() => localStore.setOpenUsernameModal(true)}
+            onMenuClick={() => localStore.setOpenSlidebar(true)}
+            onDeleteChatClick={() => localStore.setOpenChatDeletionModal(true)}
           />
         </div>
         <div className="w-full h-full flex flex-row overflow-y-hidden">
@@ -81,7 +95,35 @@ const App = observer(() => {
         </div>
       </div>
 
-      {/* waifu selection modal */}
+      {/* Modals and slidebars */}
+
+      {/* Menu Slidebar */}
+      <Slidebar
+        onClose={() => { localStore.setOpenSlidebar(false); }}
+        onWaifuSelectModalClick={openWaifuSelectionModel}
+        onUsernameModalClick={() => localStore.setOpenUsernameModal(true)}
+        open={localStore.openSlidebar}
+      />
+
+      {/* Chat deletion modal */}
+      <Modal
+        onClose={() => localStore.setOpenChatDeletionModal(false)}
+        confirmationBtnText="Delete"
+        onConfirmationBtnClick={deleteCurrentChat}
+        onCancelBtnClick={() => localStore.setOpenChatDeletionModal(false)}
+        open={localStore.openChatDeletionModal}
+      >
+        <div className="text-center w-96">
+          <h3 className="text-primary-text-color font-bold">
+            DELETE CURRENT CHAT
+          </h3>
+          <p className="text-sm text-primary-text-color/60 mb-6">
+            You will delete current chat forever
+          </p>
+        </div>
+      </Modal>
+
+      {/* Waifu selection modal */}
       <Modal
         onClose={() => localStore.setOpenSelectWaifuModal(false)}
         onConfirmationBtnClick={() => {}}
@@ -92,7 +134,7 @@ const App = observer(() => {
           <h3 className="text-primary-text-color font-bold">
             CHOOSE YOUR WAIFU
           </h3>
-          <div className="flex my-9 px-12">
+          <div className="flex flex-col my-9 px-12">
             {localStore.waifuList.map((waifu) => (
               <button
                 type="button"
@@ -118,11 +160,11 @@ const App = observer(() => {
         </div>
       </Modal>
 
-      {/* username modal */}
+      {/* Username modal */}
       <Modal
         onClose={() => localStore.setOpenUsernameModal(false)}
         confirmationBtnText="Save"
-        onConfirmationBtnClick={() => saveUsername()}
+        onConfirmationBtnClick={saveUsername}
         onCancelBtnClick={() => localStore.setOpenUsernameModal(false)}
         open={localStore.openUsernameModal}
       >

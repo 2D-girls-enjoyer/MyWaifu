@@ -1,30 +1,29 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react';
 import { observer, useLocalObservable } from 'mobx-react';
 import { reaction } from 'mobx';
 import ChatBubble from '../../components/chat-bubble/chatBubble';
 import ChatTextArea from '../../components/chat-text-area/chatTextArea';
-import { BelongsTo } from '../../enums/chatBubble';
+import { BelongsTo } from '../../models/enums/chatBubble';
 import store from '../../store/store';
-import { IReply } from '../../interfaces/ApiRequests';
-import http from '../../infra/http';
+import ErrorFetch from '../../models/errors/errorFetch';
+import { ErrorName } from '../../models/errors/enum/errorName';
+import alertStore from '../../store/alertStore';
+import { AlertType } from '../../models/enums/alertType';
 
 const MainChat = observer(() => {
   const chatRef = useRef<HTMLDivElement>(null);
 
   const localStore = useLocalObservable(() => ({
-    chat: [] as IReply[],
     lockSendResponse: true,
-
-    appendReply(reply: IReply) {
-      this.chat.push(reply);
-    },
-
-    setChat(replies: IReply[]) {
-      this.chat = replies;
-    },
+    isWaifuTyping: false,
 
     setLockSendResponse(lock: boolean) {
       this.lockSendResponse = lock;
+    },
+
+    setIsWaifuTyping(isTyping: boolean) {
+      this.isWaifuTyping = isTyping;
     },
   }));
 
@@ -36,33 +35,41 @@ const MainChat = observer(() => {
 
   const handleUserSentResponse = async (userMessageToBeSent: string) => {
     localStore.setLockSendResponse(true);
-    const waifuResponsePromise = http.generateWaifuResponse({
-      userReply: userMessageToBeSent,
-    });
-    localStore.appendReply({
-      content: userMessageToBeSent,
-      sender: 'User',
-      date: new Date().toString(),
-    });
-
-    const { response } = await waifuResponsePromise;
-    localStore.appendReply({
-      content: response,
-      sender: store.waifuName,
-      date: new Date().toString(),
-    });
-
-    localStore.setLockSendResponse(false);
+    localStore.setIsWaifuTyping(true);
+    try {
+      await store.generateChat(userMessageToBeSent);
+    } catch (err: any) {
+      if (err instanceof ErrorFetch) {
+        switch (err.errorName) {
+          case ErrorName.CONNECTION_REFUSED:
+            alertStore.addAlert({
+              type: AlertType.ERROR,
+              message: 'Make sure the the LM Studio is running and with it\'s server on. Check the simplified "Usage guide" at: https://github.com/2D-girls-enjoyer/MyWaifu',
+            });
+            break;
+          case ErrorName.IRREGULAR_LOADED_MODEL_QUANTITY:
+            alertStore.addAlert({
+              type: AlertType.ERROR,
+              message: 'LmStudio should be loaded with one model only. Check the simplified "Usage guide" at: https://github.com/2D-girls-enjoyer/MyWaifu',
+            });
+            break;
+          default:
+            alertStore.addAlert({ type: AlertType.UNKNOWN, message: 'Unknown UI error occured' });
+        }
+      }
+    } finally {
+      localStore.setIsWaifuTyping(store.isWaifuTyping(store.waifuName));
+      localStore.setLockSendResponse(false);
+    }
   };
 
   const loadWaifuChatToLocalStore = async () => {
-    const { chatSummary } = await http.getWaifuChat();
-    localStore.setChat(chatSummary);
+    await store.loadWaifuChat();
     localStore.setLockSendResponse(false);
   };
 
-  const renderChat = () => (localStore.chat?.length > 0
-    ? localStore.chat.map((reply) => (
+  const renderChat = () => (store.chat?.length > 0
+    ? store.chat.map((reply) => (
       <div
         key={`${reply.sender}-${reply.date}`}
         className={
@@ -103,7 +110,11 @@ const MainChat = observer(() => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [localStore.chat.length]);
+  }, [store.chat.length]);
+
+  useEffect(() => {
+    localStore.setIsWaifuTyping(store.isWaifuTyping(store.waifuName));
+  }, [store.waifuName]);
 
   return (
     <div className="flex flex-col w-full h-full bg-chat-background px-2">
@@ -113,11 +124,29 @@ const MainChat = observer(() => {
         {renderChat()}
         <div ref={chatRef} />
       </div>
-      <div className="flex items-end basis-1/12 mb-8">
-        <ChatTextArea
-          lockSendResponse={localStore.lockSendResponse}
-          onUserSendResponse={({ currentText }) => { handleUserSentResponse(currentText); }}
-        />
+      <div className="flex w-full flex-col items-end basis-1/12 mb-2">
+        <div className="basis-1/2 w-full">
+          <ChatTextArea
+            lockSendResponse={localStore.lockSendResponse}
+            onUserSendResponse={({ currentText }) => { handleUserSentResponse(currentText); }}
+          />
+        </div>
+        <div className="h-8 w-full">
+          {localStore.isWaifuTyping && (
+          <span className="flex w-full space-x-1 mt-2 pl-2">
+            <div className="flex space-x-2 items-center">
+              <div className="h-1 w-1 bg-secondary-color rounded-full animate-bounce [animation-delay:-0.3s]" />
+              <div className="h-1 w-1 bg-secondary-color rounded-full animate-bounce [animation-delay:-0.15s]" />
+              <div className="h-1 w-1 bg-secondary-color rounded-full animate-bounce" />
+            </div>
+            <p className="font-bold text-sm text-primary-text-color/60">
+              {store.waifuName}
+              {' '}
+              is typing
+            </p>
+          </span>
+          )}
+        </div>
       </div>
     </div>
   );

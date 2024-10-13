@@ -15,7 +15,7 @@ class FileSystemUtils {
           throw new Error(`Unexpected error reading file ${directory}/${fileName}`);
         }
         const content = '';
-        this.write(directory, fileName, content, true);
+        await this.write(directory, fileName, content, true);
 
         return content;
       }
@@ -39,6 +39,16 @@ class FileSystemUtils {
     }
 
     await fs.writeFile(`${directory}/${fileName}`, content);
+  }
+
+  public async delete(directory: string, fileName: string): Promise<void> {
+    try {
+      await fs.unlink(`${directory}/${fileName}`);
+    } catch (err: any) {
+      console.log(err);
+
+      console.log(`${directory}/${fileName} may already have been deleted`);
+    }
   }
 }
 

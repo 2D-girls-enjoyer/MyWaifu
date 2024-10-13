@@ -59,7 +59,7 @@ const ChatTextArea = observer(({ onUserSendResponse, lockSendResponse }: ChatTex
         disabled={lockSendResponse}
         className="basis-1/12 text-primary-text-color bg-primary-color/80
         hover:bg-primary-color/90 font-medium rounded-lg text-sm px-5 py-2.5"
-        onClick={() => handleSend()}
+        onClick={handleSend}
       >
         SEND
       </button>

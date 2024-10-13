@@ -1,4 +1,4 @@
-import { BelongsTo } from '../../enums/chatBubble';
+import { BelongsTo } from '../../models/enums/chatBubble';
 
 type ChatBubbleProps = {
   belongsTo: BelongsTo,

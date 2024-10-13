@@ -1,7 +1,8 @@
 import { IReply } from './IReply';
 
 export interface IGenerateResponse {
-  response: string
+  waifuPack: string;
+  response: string;
 }
 
 export interface IWaifuPacksResponse {
@@ -14,4 +15,10 @@ export interface IUsernameResponse {
 
 export interface IChatSummaryResponse {
   chatSummary: IReply[]
+}
+
+export interface IErrorResponse {
+  code: number;
+  errorName: string;
+  message: string;
 }
