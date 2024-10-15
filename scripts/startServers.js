@@ -10,8 +10,6 @@ const viteSuccess_regex = /Local:\s*(http:\/\/localhost:[0-9]{1,5}\/)/;
 const EADDRINUSEErr_regex = /EADDRINUSE:\s+address already in use\s+.+:([0-9]{1,5})\n/;
 const currentDir = process.cwd();
 
-
-
 ['SIGINT', 'SIGTERM'].forEach((signal) => {
    process.on(signal, () => {
       console.log(`Received exit signal, exiting...`);
@@ -19,8 +17,6 @@ const currentDir = process.cwd();
       process.exit(0);
    });
 });
-
-
 
 console.log(`Starting servers...\nCurrent working directory: ${currentDir}`);
 
@@ -39,7 +35,7 @@ const uiServer = spawn(npm, ['run', 'preview'], {
 apiServer.stderr.on('data', (data) => {
    data = data.toString();
 
-   if(data.includes('listen EADDRINUSE: address already in use')){
+   if (data.includes('listen EADDRINUSE: address already in use')) {
       const port = data.match(EADDRINUSEErr_regex)[1];
 
       console.error(`API Server Error: Port ${port} already in use. Exiting...`);
@@ -60,17 +56,10 @@ uiServer.stdout.on('data', (data) => {
 
    // catch success message
    const successMsg = cleanString(data).match(viteSuccess_regex);
-   if(successMsg) tellServerStarted(successMsg[1]);
+   if (successMsg) tellServerStarted(successMsg[1]);
 });
 
-
-
-
-
-
-
-
-function tellServerStarted(url){
+function tellServerStarted(url) {
    setTimeout(() => { // vite takes some time to print all messages, we'll let it finish
       console.log(`\nServer started successfully.\nvisit: ${url} for User Interface\n[TIP] Press Ctrl+C to stop.`);
    }, 500);

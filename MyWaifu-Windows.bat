@@ -53,4 +53,4 @@ REM Step: Return to the previous folder
 cd ..
 
 REM Script finished, starting the Servers
-call node scripts/startServers.js
+node scripts/startServers.js
