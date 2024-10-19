@@ -2,9 +2,17 @@ import fs from 'node:fs/promises';
 import resourcesConstants from '../configurations/resourcesConstants';
 import { IChatStorage, IReply } from '../models/interfaces/IReply';
 import fileUtils from '../utils/fileUtils';
+import customConfigurations from '../configurations/customConfigurations';
+import ProcessError from '../models/errors/ProcessError';
+import ErrorSubType from '../models/errors/enum/errorSubType';
 
 class ChatRepository {
+  // TEMPORARY!!! On prototype 3 (last) I'll test saving/control chat on SQLite
   public async saveReply(reply: IReply, waifuPack: string): Promise<IReply[]> {
+    if (!waifuPack || waifuPack === '') {
+      throw new ProcessError('', ErrorSubType.WAIFU_NOT_SELECTED);
+    }
+
     let chat: IReply[];
 
     try {
@@ -14,8 +22,6 @@ class ChatRepository {
         console.log(`Unexpected error at access ${waifuPack} chat summary`);
         throw new Error(`Unexpected error at access ${waifuPack} chat summary`);
       }
-
-      console.log(`Chat summary for ${waifuPack} does not exist`);
       chat = [];
     }
 
@@ -46,8 +52,15 @@ class ChatRepository {
     }
   }
 
+  public async deleteAllReplies(waifuPack: string): Promise<void> {
+    await fileUtils.delete(
+      `${resourcesConstants.DATA_PATH}/${waifuPack}`,
+      'recentChat.json',
+    );
+  }
+
   private capIfNecessary(replies: IReply[]): void {
-    if (replies.length >= resourcesConstants.REPLIES_MAX_AMOUNT_SAVE) {
+    if (replies.length >= customConfigurations.REPLIES_MAX_AMOUNT_SAVE) {
       replies.shift();
     }
   }

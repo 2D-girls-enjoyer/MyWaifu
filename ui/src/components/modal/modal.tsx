@@ -15,7 +15,7 @@ function Modal({
     <div
       onClick={onClose}
       className={`fixed inset-0 flex justify-center items-center transition-colors 
-      ${open ? 'visible bg-black/50' : 'invisible'}`}
+      ${open ? 'visible bg-black/50' : 'invisible'} z-40`}
     >
       <div
         onClick={(e) => { e.stopPropagation(); }}
@@ -27,7 +27,7 @@ function Modal({
           onClick={onClose}
           className="absolute top-0 right-2 p-1 rounded-lg"
         >
-          <p className="text-2xl font-mono font-extrabold font text-gray-500">X</p>
+          <p className="text-2xl font-mono font-extrabold font text-secondary-color">X</p>
         </button>
         {children}
         <div className="flex w-full flex-row space-x-3 mt-1">

@@ -10,7 +10,7 @@ class ChatManager {
       return;
     }
 
-    chatRepository.saveReply(
+    await chatRepository.saveReply(
       {
         content: waifuCard.intialReply,
         sender: waifuCard.name,
@@ -33,6 +33,10 @@ class ChatManager {
 
   public async getReplies(waifuPack: string) {
     return chatRepository.getReplies(waifuPack);
+  }
+
+  public async deleteAllReplies(waifuPack: string) {
+    await chatRepository.deleteAllReplies(waifuPack);
   }
 }
 

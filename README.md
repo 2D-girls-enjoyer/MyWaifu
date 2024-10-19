@@ -12,46 +12,42 @@
 
 ---
 
-<p align="center"> Make your waifu real
+<p align="center"> The helpful waifu you want at your PC
     <br> 
 </p>
 
 
 ## 💖 Help MyWaifu keep alive and improve
 
-**MyWaifu** is a free open source project and it'll always be for anyone use the way they think it's the best. 
+**MyWaifu** is a free open source project and it'll always be.
 
 **You can help MyWaifu continuity with codes and/or donating at Ko-fi**
 <p align="center">
    <a href='https://ko-fi.com/J3J210NM1B' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 </p>
 
-
-* [Objectives](#objectives)
-* [Talk to your waifu](#problem_statement)
+* [Your talkative and helpful waifu](#problem_statement)
 * [🚨 Instalation guide](#instalation_guide)
 * [🧾Usage guide & recommendation](#usage_guide)
 * [✍️ Authors](#authors)
 
-## 🖊 Objectives <a name = "objectives"></a>
+## Your talkative and helpful waifu <a name = "problem_statement"></a>
+Imagine having your favorite waifus as companions for venting or simply spending time talking at your own PC, all for free and forever.
 
-### 🥇 Main Objectives
+Sugoi, right?
 
-- [ ] Create chat system with user and AI playing the role of a waifu
-- - [x] Support to LMStudio (primary)
-- - [ ] Support to GPT api's
-- [ ] Create VOICE chat system between user and waifu
-- - [ ] User speech recognition (Speech to text)
-- - [ ] Waifu TTS (Text To Voice)
-- [ ] Waifu emotion detection for each speech
-- [ ] Work on Live2D of the waifu (e.g expressions, motions, rigging)
+In future releases, your waifu will also be able to assist you with general tasks on your computer and answer your questions, just like your personal assistant.
 
-### 🥈 Secundary obectives (nice 2 have)
-- [ ] Long term memory (Waifu should remember events and previous messages)
-- [ ] A platform or script to make easier for "modding" (e.g someone add their custom waifu, Live2d, voice, etc)
+<p align="center">
+  <img src="./images/ex_Erika.PNG" width="400" /> 
+  <img src="./images/ex_arona.PNG" width="400" />
+</p>
 
-## Talk to your waifu <a name = "problem_statement"></a>
-Have your own waifu on your PC without limits, no queues, and forever. Over time, features and improvements will be added with the support of the community.
+<p align="center">
+  <img src="./images/ex_Saori.PNG" width="400" /> 
+  <img src="./images/ex_Yukari.PNG" width="400" />
+</p>
+
 
 ## 🚨 Instalation guide <a name = "instalation_guide"></a>
 Here follows an intalation guide step by step, in future releases some steps may become automatic, making it even more easier for fresh install:
@@ -79,8 +75,6 @@ Now install MyWaifu.
 
 You can download the zip or tar.gz right here on GitHub - https://github.com/2D-girls-enjoyer/MyWaifu/releases
 
-Also, here is a guide on how to download from GitHub: https://blog.hubspot.com/website/download-from-github#repository
-
 
 ### Done!!!
 Now that you have everything installed let's move to the usage guide, so you can begin using MyWaifu!
@@ -88,71 +82,49 @@ Now that you have everything installed let's move to the usage guide, so you can
 ##  🧾Usage guide & recommendation <a name = "usage_guide"></a>
 
 ### 1 - Set up LM Studio
-Firstly, you need to choose what AI it will be based on. This is a very important step since it will determine the quality and speed of the waifu responses. 
+First, you need to choose what AI it will be based on. This is a very important step since it will determine the quality and speed of the waifu responses.
 
-(If you already have a somewhat knoledge in LLM models feel free to choose one and try)
+
+⚠️Warning: Double check if you are at Power User mode before all⚠️
+<p align="center">
+   <img src="./images/power_user.PNG" style="width:auto;height:auto;"/>
+</p>
+
+(If you already have knoledge in LLM models feel free to choose any and try)
 
 #### 1.1 - Search and download the model (If your first time)
-Go to "Search" to find your model
-<p align="center">
-   <img src="./images/lm-studio-search.PNG" style="width:auto;height:auto;"/>
-</p>
+Go to "Discover" to find new models and download it. 
 
 <p align="center">
-   <img src="./images/choose-to-download.PNG" style="width:auto;height:auto;"/>
+   <img src="./images/search.PNG" style="width:auto;height:auto;"/>
 </p>
+
+Some models has multiple options to download.
+
+To simplify things, think that the less space (Gigabytes) it has, the more "dumb" the model will be, but it'll be faster.
 
 ⚠️Warning: Prefer models that can be fully or partially loaded on GPU⚠️
-
 <p align="center">
-   <img src="./images/choose-model-partial.PNG" style="width:auto;height:auto;"/>
+   <img src="./images/download_models.PNG" style="width:auto;height:auto;"/>
 </p>
 
-##### Recommendation for model
-These AI models comes with quality vs speed trade off, which means: An AI model with the best quality will be slower and require more of your PC and an poor quality AI will be faster and require less (⚠️Not a rule, so there will be cases where the AI model is slow and has poor quality in this case ⚠️) so you need to find the perfect balance for your case
+##### Recommended models
 
+1. (Character fidelity | General activities) **Llama-3.2-3B-Instruct-GGUF** (Q4_K_M) by **lmstudio-community** - Note: In terms of character personification, it has a good fidelity to it's personality (so if your waifu is unresonable, so it'll be) and has decent grasp on general knowledge.
 
-I've tested several AI's and the best models so far were these:
-
-1. (Very Stable - Recommended) **TheBloke/Wizard-Vicuna-7B-Uncensored** (Q4_K_M) - Note: So far this is the best model give good responses and doesn't require much of you PC. In case it's too large for your PC try the same but with tag on it Q3_K_S
-
-2. (Instable) **TheBloke/OpenHermes-2.5-Mistral-7B-GGUF** (Q8_0) - Note: This one requires more of your PC and is not so stable compared to **Wizard-Vicuna-7B-Uncensored**, but it offers better responses
-
-3. (Almost stable) **cognitivecomputations\dolphin-2.9.4-llama3.1-8b-gguf** - Note: This has a great response and very straighfoward and active, so if you want a more intensive conversation with your waifu this is the model
+2. (Character "realism") **stablelm-zephyr-3b-GGUF** (Q4_K_M) by **TheBloke** - Note: It can assimilate the waifu personality but it'll ground it to reasonable responses. In other words, it'll be as if your waifu lived in the real world and had boundries.
 
 #### 1.2 - Use the model
-Go to "Local Server" and click "Select a model to load" to choose a model
-<p align="center">
-   <img src="./images/use-model.PNG" style="width:auto;height:auto;"/>
-</p>
+Go to "Developer" and click "Select a model to load" choose your model.
 
-⚠️Warning: In case you get a message like this⚠️
-<p align="center">
-   <img src="./images/too-big-model.PNG" style="width:auto;height:auto;"/>
-</p>
-<p align="center">
-   <img src="./images/too-big-meme.PNG" style="width:200px;height:auto;"/>
-</p>
-
-It basically means your AI model is too big for your GPU memory but you can "fix" it:
-
-Simply on the right side, scroll and find on GPU settings a slider "GPU Acceleration" and lower it and launch again until it fits on your GPU
-
+Also make sure to click "Start Server", so MyWaifu can communicate with the AI.
 
 <p align="center">
-   <img src="./images/adjust-model-size.PNG" style="width:auto;height:auto;"/>
+   <img src="./images/use_model.PNG" style="width:auto;height:auto;"/>
 </p>
 
-#### 1.3 - Make sure system prompt is blank
-A very important step is to make the system prompt blank either by deleting whatever is writen on "System prompt" or by selecting the Preset "LM Studio Blank Preset" (I recommend the later).
 
-Otherwise it can "confuse" the AI. The default configurations of MyWaifu can guarantee it'll follow the character most of the times
-
-(⚠️ In case you already loaded the model I recommend to click "Eject Model" on top right and load again as on #Step 1.2)
-
-<p align="center">
-   <img src="./images/blank-preset.PNG" style="width:auto;height:auto;"/>
-</p>
+**TIP:** After loading the model you can balance the usage of GPU (in case your GPU is "weak"). Note this will be a trade off between your RAM and CPU, so "less GPU" more CPU and RAM it will consume. 
 
 ### 2 - Start MyWaifu
 To start MyWaifu is very simple 
@@ -169,7 +141,3 @@ Double-click the **MyWaifu-Linux.sh** and it's up and running
 ## ✍️ Authors <a name = "authors"></a>
 
 - [@weeb_head_yabai](https://twitter.com/weeb_head_yabai) - Idea & Initial work 
-
-## 🎉 Acknowledgments <a name = "acknowledgments"></a>
-
-Later

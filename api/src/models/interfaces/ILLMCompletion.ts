@@ -13,3 +13,9 @@ export interface ILLMChoice {
 export interface ILLMCompletionResponse {
   choices: ILLMChoice[]
 }
+
+export interface IGeneratedCompletion {
+  response: string,
+  waifuPack: string,
+  waifuName: string,
+}

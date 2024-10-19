@@ -1,56 +1,64 @@
-import { API_DOMAIN } from '../constants/network';
+import { API_DOMAIN } from '../constants';
+import ErrorFetch from '../models/errors/errorFetch';
 import {
   IChatSummaryResponse,
+  IErrorResponse,
   IUsernameRequest,
   IWaifuGenerateRequest,
   IWaifuGenerateResponse,
   IWaifuSelectionRequest,
   IWaifuSelectionResponse,
-} from '../interfaces/ApiRequests';
+} from '../models/interfaces/apiRequests';
 
 class Http {
   public async getUsername(): Promise<IUsernameRequest> {
-    return (await fetch(`${API_DOMAIN}/username`)).json();
+    return this.httpFetch('/username', 'GET');
   }
 
   public async saveUsername(usernameRequest: IUsernameRequest): Promise<void> {
-    await fetch(`${API_DOMAIN}/username`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(usernameRequest),
-    });
+    await this.httpFetch('/username', 'POST', usernameRequest);
   }
 
   public async getWaifus(): Promise<IWaifuSelectionResponse> {
-    return (await fetch(`${API_DOMAIN}/waifu/pack`)).json();
+    return this.httpFetch('/waifu/pack', 'GET');
   }
 
   public async selectWaifu(waifuSelectionRequest: IWaifuSelectionRequest): Promise<void> {
-    await fetch(`${API_DOMAIN}/waifu/select`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(waifuSelectionRequest),
-    });
+    await this.httpFetch('/waifu/select', 'POST', waifuSelectionRequest);
   }
 
   public async getWaifuChat(): Promise<IChatSummaryResponse> {
-    return (await fetch(`${API_DOMAIN}/chat`)).json();
+    return this.httpFetch('/chat', 'GET');
+  }
+
+  public async deleteWaifuChat(): Promise<void> {
+    await this.httpFetch('/chat', 'DELETE');
   }
 
   public async generateWaifuResponse(
     generateRequest: IWaifuGenerateRequest,
   ): Promise<IWaifuGenerateResponse> {
-    return (await fetch(`${API_DOMAIN}/waifu/generate`, {
-      method: 'POST',
+    return this.httpFetch('/waifu/generate', 'POST', generateRequest);
+  }
+
+  private async httpFetch<T>(path: string, method: string, body?: object): Promise<T> {
+    const response = await fetch(`${API_DOMAIN}${path}`, {
+      method,
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(generateRequest),
-    })).json();
+      ...(body && { body: JSON.stringify(body) }),
+    });
+
+    if (!response.ok) {
+      throw new ErrorFetch((await response.json()) as IErrorResponse);
+    }
+
+    try {
+      return await response.json();
+    } catch (err: any) {
+      return undefined as any;
+    }
   }
 }
 

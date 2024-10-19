@@ -7,7 +7,7 @@
   --secondary-color: 118, 126, 145;
   --primary-text-color: 238, 238, 245;
   --color-modal-background: 44, 44, 44;
-  --color-navbar-background: 39, 39,39;
+  --color-navbar-background: 31, 31,31;
   --color-chat-background: 43, 43, 43;
   --color-user-bubble: 71, 72, 74;
   --color-user-bubble-text: 238, 238, 245;
@@ -15,6 +15,20 @@
   --color-waifu-bubble-text: 238, 238, 245;
 }
 
+
+/*Material icon*/
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.primary { color: rgba(var(--primary-color)) }
+
+/*Tootip cliping */
+
+.clip-top {
+  clip-path: polygon(0 0, 100% 50%, 0 100%)
+}
 
 /* width */
 ::-webkit-scrollbar {

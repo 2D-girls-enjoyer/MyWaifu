@@ -1,0 +1,23 @@
+{
+  "compress": {
+    "dead_code": true,
+    "conditionals": true,
+    "booleans": true,
+    "unused": true,
+    "drop_debugger": true,
+    "drop_console": false,
+    "sequences": true,
+    "passes": 2
+  },
+  "mangle": {
+    "toplevel": true,
+    "keep_fnames": true,
+    "keep_classnames": true
+  },
+  "output": {
+    "comments": false,
+    "beautify": false
+  },
+  "keep_classnames": true,
+  "sourceMap": true
+}

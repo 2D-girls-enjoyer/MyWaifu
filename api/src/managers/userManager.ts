@@ -4,24 +4,20 @@ class UserManager {
   private CURRENT_USERNAME: string | undefined = undefined;
 
   public async create(username: string): Promise<void> {
-    userRepository.setUsername(username);
+    await userRepository.setUsername(username);
     this.CURRENT_USERNAME = username;
   }
 
   public async get(): Promise<string> {
     if (!this.CURRENT_USERNAME) {
       this.CURRENT_USERNAME = await userRepository.getUsername();
-      this.setDefaultUsernameIfNecessary();
+
+      if (!this.CURRENT_USERNAME || this.CURRENT_USERNAME === '') {
+        await this.create('User');
+      }
     }
 
     return this.CURRENT_USERNAME;
-  }
-
-  private async setDefaultUsernameIfNecessary() {
-    if (!this.CURRENT_USERNAME || this.CURRENT_USERNAME === '') {
-      this.CURRENT_USERNAME = 'User';
-      this.create(this.CURRENT_USERNAME);
-    }
   }
 }
 

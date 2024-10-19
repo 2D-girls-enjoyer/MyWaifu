@@ -1,4 +1,4 @@
 export enum BelongsTo {
   WAIFU = 'WAIFU',
-  USER = 'USER'
+  USER = 'USER',
 }
