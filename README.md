@@ -32,11 +32,11 @@
 * [✍️ Authors](#authors)
 
 ## Your talkative and helpful waifu <a name = "problem_statement"></a>
-Imagine having your favorite waifus as companions for venting or simply spending time talking at your own PC, all for free and forever.
+Imagine having your favorite waifus as your assitant and spending time talking at your own PC, all for free and forever.
 
 Sugoi, right?
 
-In future releases, your waifu will also be able to assist you with general tasks on your computer and answer your questions, just like your personal assistant.
+For now only chatting is available but, in future releases, your waifu will also be able to assist you with general tasks on your computer and answer your questions, just like your personal assistant.
 
 <p align="center">
   <img src="./images/ex_Erika.PNG" width="400" /> 
