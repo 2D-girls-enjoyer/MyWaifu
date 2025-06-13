@@ -6,7 +6,7 @@
 
 <div align="center">
 
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
+[![Status](https://img.shields.io/badge/project%20status-hiatus-orange)]()
 
 </div>
 
